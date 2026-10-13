@@ -1,0 +1,35 @@
+{
+  "id": "f4f44b9d-dc33-4a7c-895c-11caeae6aeb2",
+  "name": "Rijk Zwaan",
+  "publisher": "DSA Global Solutions",
+  "version": "27.0.0.0",
+  "brief": "ABS Interface for RIjk Zwaan",
+  "description": "ABS Interface for RIjk Zwaan",
+  "privacyStatement": "https://www.dsa-gs.com/privacy-policy",
+  "EULA": "https://www.dsa-gs.com/eula",
+  "help": "https://www.dsa-gs.com/help",
+  "url": "https://www.dsa-gs.com",
+  "logo": "./logo/ExtensionLogo.png",
+  "contextSensitiveHelpUrl": "https://www.dsa-gs.com/help",
+  "applicationInsightsConnectionString": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "27.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "16.0",
+  "features": [
+      "NoImplicitWith",
+      "TranslationFile"
+  ]
+}

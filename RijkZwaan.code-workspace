@@ -1,0 +1,74 @@
+{
+"folders":
+    [
+        {
+            "name": ".alpackages",
+            "path": "Apps/.alpackages"
+        },
+        {
+            "name": "RZW ABS-Interface",
+            "path": "Apps/RZW ABS-Interface"
+        },
+        {
+            "name": ".github",
+            "path": ".github"
+        },
+        {
+            "name": ".AL-Go",
+            "path": ".AL-Go"
+        }
+    ],
+    "launch": {
+        "configurations": [
+            {
+                "type": "al",
+                "request": "launch",
+                "name": "Local BC27 docker",
+                "server": "http://dockerbc27w1",
+                "port": 7049,
+                "serverInstance": "BC",
+                "authentication": "UserPassword",
+                "breakOnError": true,
+                "tenant": "default",
+                "schemaUpdateMode": "ForceSync",
+                "launchBrowser": true,
+                "forceUpgrade": true
+            }
+            
+        ],
+        "version": "0.2.0"
+    },
+    "settings": {
+        "al.backgroundCodeAnalysis": "Project",
+        "al.codeAnalyzers": [
+
+        
+            "${AppSourceCop}",
+            "${CodeCop}",
+            "${PerTenantExtensionCop}",
+            "${UICop}"
+        ],
+        "al.enableCodeAnalysis": true,
+        "al.packageCachePath": [
+            "../.alpackages"
+        ],
+        "al.publisher": "DSA Global Solutions",
+        "al.ruleSetPath": "../.codeAnalysis/DSA.ruleset.json",
+        
+        "alCodeActions.varParameters": [
+            "IsHandled"
+        ],
+        "dotnetAcquisitionExtension.existingDotnetPath": [],
+        "powershell.cwd": "Eteck Recurring Invoices",
+        "CRS.OnSaveAlFileAction": "Rename",
+        "CRS.FileNamePattern": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+        "CRS.FileNamePatternExtensions": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+        "CRS.FileNamePatternPageCustomizations": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+        "CRS.ExtensionObjectNamePattern": "",
+        "editor.fontWeight": "normal",
+        "editor.fontLigatures": false,
+        "al.entraIdAuthentication": {
+            
+        }
+    }
+}

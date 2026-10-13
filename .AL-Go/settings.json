@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/AL-Go-Actions/v7.3/.Modules/settings.schema.json",
+  "type": "PTE",
+  "appDependencyProbingPaths": [
+    
+  ],
+  "appFolders": [
+    "Apps/RZW ABS-Interface"
+  ],
+  "bcptTestFolders": [],
+  "country": "w1",
+  "doNotPubishApps": true,
+  "doNotRunTest": true,
+  "installApps": [],
+  "projectName": "Rijk Zwaan",
+  "useCompilerFolder": true,
+  "GenerateDependencyArtifact": false,
+  "artifact": "//27/w1"
+}

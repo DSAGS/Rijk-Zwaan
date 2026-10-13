@@ -1,0 +1,28 @@
+{
+    "name": "Name",
+    "description": "Description",
+    "rules": [
+        {
+            "id": "AS0079",
+            "action": "Error",
+            "justification": "Justification"
+        },
+        {
+            "id": "AS0084",
+            "action": "None",
+            "justification": "Justification"
+        },
+        {
+            "id": "AS0092",
+            "action": "Hidden",
+            "justification": "Justification"
+        },
+        {
+            "id": "AA0204",
+            "action": "None",
+            "justification": ""
+        },
+        {"id": "AA0244", "action": "None", "justification": "AL follows Pascal symbol scope rules"},
+        {"id": "AA0245", "action": "None", "justification": "AL follows Pascal symbol scope rules"}
+    ]
+}

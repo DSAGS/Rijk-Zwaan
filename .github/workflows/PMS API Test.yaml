@@ -1,0 +1,30 @@
+name: "PMS API Test"
+
+on:
+    # push:
+    #     branches:
+    #         - 'janhoek/etk-pom-test'
+    workflow_dispatch:
+
+jobs:
+    test:
+        runs-on: self-hosted
+        environment: Eteck-TST
+        steps:
+          - uses: actions/checkout@v4
+
+          - name: Invoke Pester
+            shell: pwsh
+            env:
+                ClientID: ${{secrets.CLIENT_ID}}
+                ClientSecret: ${{secrets.CLIENT_SECRET}}
+            run: |
+                $Data = @{
+                    TenantId = '175f2695-523c-4d74-b8a8-eccdac27392a'
+                    ClientId = $env:ClientId
+                    ClientSecret = $env:ClientSecret
+                    EnvironmentName = 'Eteck-TST'
+                }
+
+                $PesterContainer = New-PesterContainer -Path ($env:GITHUB_WORKSPACE) -Data $Data
+                Invoke-Pester -Container $PesterContainer -CI -Output Detailed
