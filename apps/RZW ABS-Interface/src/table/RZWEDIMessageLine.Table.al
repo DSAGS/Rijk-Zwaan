@@ -12,12 +12,6 @@ table 50109 "RZW EDI Message Line"
         {
             Caption = 'EDI Message Type';
             TableRelation = "RZW EDI Message Type";
-
-            trigger OnValidate()
-            var
-                NoSeriesSetup: Record "No. Series";
-            begin
-            end;
         }
         field(2; "Run No."; Code[20])
         {
@@ -90,55 +84,55 @@ table 50109 "RZW EDI Message Line"
         EDIMessageHeader.GET("EDI Message Type","Run No.");
 
         TESTFIELD("Record-ID");
-        IF RecRef.GET("Record-ID") THEN BEGIN
-          CASE RecRef.NUMBER OF
-            DATABASE::Customer :
-              BEGIN
-                RecRef.SETTABLE(Cust);
-                HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 21, Cust));
-              END;
-            DATABASE::Vendor :
-              BEGIN
-                RecRef.SETTABLE(Vend);
-                HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 26, Vend));
-              END;
-            DATABASE::"Sales Header":
-              BEGIN
-                RecRef.SETTABLE(SalesHeader);
-                HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 45, SalesHeader));
-              END;
-            DATABASE::"Customer Bank Account":
-              BEGIN
-                RecRef.SETTABLE(CustBankAccount);
-                HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 423, CustBankAccount));
-              END;
-            DATABASE::"Vendor Bank Account":
-              BEGIN
-                RecRef.SETTABLE(VendBankAccount);
-                HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 425, VendBankAccount));
-              END;
-          END;
-        END ELSE BEGIN
-          LineType := FORMAT("Record-ID");
-          CASE TRUE OF
-            STRPOS(LineType,'Invoice') <> 0 :
-              BEGIN
-                DocNo := COPYSTR(LineType,STRPOS(LineType,'Invoice') + 8);
-                IF NOT SalesInvoiceHeader.GET(DocNo) THEN
-                  ERROR(Text001);
-                HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 132, SalesInvoiceHeader));
-              END;
-            STRPOS(LineType,'Credit Memo') <> 0 :
-              BEGIN
-                DocNo := COPYSTR(LineType,STRPOS(LineType,'Credit Memo') + 12);
-                IF NOT SalesCrMemoHeader.GET(DocNo) THEN
-                  ERROR(Text001);
-                HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 134, SalesCrMemoHeader));
-              END;
-            ELSE
-              ERROR(Text001);
-          END;
-        END;
+        // IF RecRef.GET("Record-ID") THEN BEGIN
+        //   CASE RecRef.NUMBER OF
+        //     DATABASE::Customer :
+        //       BEGIN
+        //         RecRef.SETTABLE(Cust);
+        //         HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 21, Cust));
+        //       END;
+        //     DATABASE::Vendor :
+        //       BEGIN
+        //         RecRef.SETTABLE(Vend);
+        //         HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 26, Vend));
+        //       END;
+        //     DATABASE::"Sales Header":
+        //       BEGIN
+        //         RecRef.SETTABLE(SalesHeader);
+        //         HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 45, SalesHeader));
+        //       END;
+        //     DATABASE::"Customer Bank Account":
+        //       BEGIN
+        //         RecRef.SETTABLE(CustBankAccount);
+        //         HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 423, CustBankAccount));
+        //       END;
+        //     DATABASE::"Vendor Bank Account":
+        //       BEGIN
+        //         RecRef.SETTABLE(VendBankAccount);
+        //         HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 425, VendBankAccount));
+        //       END;
+        //   END;
+        // END ELSE BEGIN
+        //   LineType := FORMAT("Record-ID");
+        //   CASE TRUE OF
+        //     STRPOS(LineType,'Invoice') <> 0 :
+        //       BEGIN
+        //         DocNo := COPYSTR(LineType,STRPOS(LineType,'Invoice') + 8);
+        //         IF NOT SalesInvoiceHeader.GET(DocNo) THEN
+        //           ERROR(Text001);
+        //         HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 132, SalesInvoiceHeader));
+        //       END;
+        //     STRPOS(LineType,'Credit Memo') <> 0 :
+        //       BEGIN
+        //         DocNo := COPYSTR(LineType,STRPOS(LineType,'Credit Memo') + 12);
+        //         IF NOT SalesCrMemoHeader.GET(DocNo) THEN
+        //           ERROR(Text001);
+        //         HYPERLINK(GETURL(CLIENTTYPE::Current,EDIMessageHeader.Company,OBJECTTYPE::Page, 134, SalesCrMemoHeader));
+        //       END;
+        //     ELSE
+        //       ERROR(Text001);
+        //   END;
+        // END;
     end;
 
     local procedure GetMessageHeader()

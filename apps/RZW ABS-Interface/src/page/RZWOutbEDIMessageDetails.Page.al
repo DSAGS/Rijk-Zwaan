@@ -1,5 +1,5 @@
 namespace RZW;
-page 50101 "RZW Outb. EDI Message Details"
+page 50119 "RZW Outb. EDI Message Details"
 {
     Caption = 'Outb. EDI Message Details';
     Editable = false;

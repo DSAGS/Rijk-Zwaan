@@ -29,13 +29,6 @@ permissionset 50100 RZWPermissions
         table "RZW EDI Message Type" = X,
         codeunit "RZW EDI Message Type Mgt." = X,
         codeunit "RZW Outb. EDI Msg. Process" = X,
-        page = X,
-        page = X,
-        page = X,
-        page = X,
-        page = X,
-        page = X,
-        page = X,
         page "RZW Inb. EDI Message Details" = X,
         page "RZW Outb. EDI Message Details" = X;
 }
