@@ -1,25 +1,27 @@
+namespace RZW;
 page 50110 "RZW Inb. EDI Message Subf."
 {
     Caption = 'Lines';
     Editable = false;
     LinksAllowed = false;
     PageType = ListPart;
-    SourceTable = Table90011;
-
+    SourceTable = "RZW EDI Message Line";
+    ApplicationArea = All;
+    UsageCategory = None;
     layout
     {
         area(content)
         {
             repeater(Group)
             {
-                field(Description; Description)
+                field(Description; Rec.Description)
                 {
                 }
-                field(FORMAT("Record-ID"); FORMAT("Record-ID"))
+                field("Record-ID"; FORMAT(Rec."Record-ID"))
                 {
                     Caption = 'Record-ID';
                 }
-                field("Document Status"; "Document Status")
+                field("Document Status"; Rec."Document Status")
                 {
                 }
             }
@@ -32,7 +34,7 @@ page 50110 "RZW Inb. EDI Message Subf."
         {
             action(Show)
             {
-                Caption = 'Show';
+                    Caption = 'Show Document';
 
                 trigger OnAction()
                 begin

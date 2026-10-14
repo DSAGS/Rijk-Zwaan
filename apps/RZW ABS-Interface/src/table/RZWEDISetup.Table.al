@@ -90,21 +90,21 @@ table 50100 "RZW EDI Setup"
     }
 
 
-    procedure TestImportCust()
+    internal procedure TestImportCust()
     begin
         TestField("Def. Customer Posting Group");
         TestField("Def. Gen. Bus. Posting Group");
         TestField("Def. VAT Bus. Posting Group");
     end;
 
-    procedure TestImportVend()
+    internal procedure TestImportVend()
     begin
         TestField("Def. Vendor Posting Group");
         TestField("Def. Gen. Bus. Posting Group");
         TestField("Def. VAT Bus. Posting Group");
     end;
 
-    procedure TestImportSInv()
+    internal procedure TestImportSInv()
     begin
         TestField("Def. Gen. Bus. Posting Group");
         TestField("Def. VAT Bus. Posting Group");
@@ -114,7 +114,7 @@ table 50100 "RZW EDI Setup"
         TestField("Default Payment Terms Code");
     end;
 
-    procedure TestImportPInv()
+    internal procedure TestImportPInv()
     begin
     end;
 }

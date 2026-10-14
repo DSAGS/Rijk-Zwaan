@@ -1,4 +1,4 @@
-codeunit 50101 "RZW Outb. EDI Msg. Process"
+codeunit 50113 "RZW Outb. EDI Msg. Process"
 {
     TableNo = "RZW EDI Message Header";
 
@@ -6,46 +6,42 @@ codeunit 50101 "RZW Outb. EDI Msg. Process"
     var
         EDIMessageHeader2: Record "RZW EDI Message Header";
     begin
-        CLEARALL;
+        ClearAll();
         EDIMessageHeader := Rec;
 
-        WITH EDIMessageHeader DO BEGIN
-            Status := Status::Rejected;
-            MODIFY;
-            COMMIT;
+        EDIMessageHeader.Status := EDIMessageHeader.Status::Rejected;
+        EDIMessageHeader.Modify();
+        Commit();
+        // To prevent processing in a wrong company
+        EDIMessageHeader.TestField(Company, CompanyName);
 
-            // To prevent processing in a wrong company
-            TESTFIELD(Company, COMPANYNAME);
+        EDIMessageType.Get(EDIMessageHeader."EDI Message Type");
+        EDIMessageType.TestField(Direction, EDIMessageType.Direction::Outbound);
+        // To prevent processing in a wrong sorting order
+        if EDIMessageType."Run No. Order" then begin
+            EDIMessageHeader2.SetCurrentKey(Company, "EDI Message Type", "Run No.", Status);
+            EDIMessageHeader2.SetRange(Company, EDIMessageHeader.Company);
+            EDIMessageHeader2.SetRange("EDI Message Type", EDIMessageHeader."EDI Message Type");
+            EDIMessageHeader2.SetFilter("Run No.", '<%1', EDIMessageHeader."Run No.");
+            EDIMessageHeader2.SetFilter(Status, '%1|%2', EDIMessageHeader2.Status::New, EDIMessageHeader2.Status::Rejected);
+            if not EDIMessageHeader2.IsEmpty() then
+                Error(Text000, EDIMessageHeader."Run No.");
+        end;
 
-            EDIMessageType.GET("EDI Message Type");
-            EDIMessageType.TESTFIELD(Direction, EDIMessageType.Direction::Outbound);
+        EDIMessageLineDetail.SetRange("EDI Message Type", EDIMessageHeader."EDI Message Type");
+        EDIMessageLineDetail.SetRange("Run No.", EDIMessageHeader."Run No.");
+        if not EDIMessageLineDetail.FindSet() then
+            Error(Text001);
 
-            // To prevent processing in a wrong sorting order
-            IF EDIMessageType."Run No. Order" THEN BEGIN
-                EDIMessageHeader2.SETCURRENTKEY(Company, "EDI Message Type", "Run No.", Status);
-                EDIMessageHeader2.SETRANGE(Company, Company);
-                EDIMessageHeader2.SETRANGE("EDI Message Type", "EDI Message Type");
-                EDIMessageHeader2.SETFILTER("Run No.", '<%1', "Run No.");
-                EDIMessageHeader2.SETFILTER(Status, '%1|%2', EDIMessageHeader2.Status::New, EDIMessageHeader2.Status::Rejected);
-                IF EDIMessageHeader2.FINDFIRST THEN
-                    ERROR(Text000, "Run No.");
-            END;
+        Window.Open(
+          '#1#################################');
 
-            EDIMessageLineDetail.SETRANGE("EDI Message Type", "EDI Message Type");
-            EDIMessageLineDetail.SETRANGE("Run No.", "Run No.");
-            IF NOT EDIMessageLineDetail.FINDSET THEN
-                ERROR(Text001);
+        Window.Update(1, StrSubstNo('%1 %2', EDIMessageHeader.TableCaption, EDIMessageHeader."Run No."));
 
-            Window.OPEN(
-              '#1#################################');
+        EDIMessageHeader.CreateTextFile(false);
 
-            Window.UPDATE(1, STRSUBSTNO('%1 %2', TABLECAPTION, "Run No."));
-
-            CreateTextFile(FALSE);
-
-            Status := Status::Processed;
-            MODIFY;
-        END;
+        EDIMessageHeader.Status := EDIMessageHeader.Status::Processed;
+        EDIMessageHeader.Modify();
         Rec := EDIMessageHeader;
     end;
 

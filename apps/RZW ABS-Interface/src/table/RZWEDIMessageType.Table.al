@@ -31,10 +31,10 @@ table 50107 "RZW EDI Message Type"
 
             trigger OnValidate()
             begin
-                IF "Source/Target Folder" = '' THEN BEGIN
-                    Blocked := TRUE;
-                    EXIT;
-                END;
+                if "Source/Target Folder" = '' then begin
+                    Blocked := true;
+                    exit;
+                end;
                 TestFolder("Source/Target Folder");
             end;
         }
@@ -52,19 +52,19 @@ table 50107 "RZW EDI Message Type"
         field(5; "Object ID"; Integer)
         {
             Caption = 'Object ID';
-            TableRelation = AllObjWithCaption."Object ID" WHERE("Object Type" = FIELD("Object Type"));
+            TableRelation = AllObjWithCaption."Object ID" where("Object Type" = field("Object Type"));
 
             trigger OnLookup()
             var
                 TempObject: Record AllObjWithCaption temporary;
             begin
-                CLEAR(TempObject);
+                Clear(TempObject);
                 EDIMessageTypeMgt.SetupObjectNoList(TempObject);
-                TempObject.SETRANGE(Type, "Object Type");
-                IF PAGE.RUNMODAL(358, TempObject) = ACTION::LookupOK THEN BEGIN
+                TempObject.SetRange("Object Type", "Object Type");
+                if Page.RunModal(Page::Objects, TempObject) = Action::LookupOK then begin
                     "Object ID" := TempObject."Object ID";
-                    VALIDATE("Object ID");
-                END;
+                    Validate("Object ID");
+                end;
             end;
 
             trigger OnValidate()
@@ -72,16 +72,16 @@ table 50107 "RZW EDI Message Type"
                 TempObject: Record AllObjWithCaption temporary;
             begin
                 EDIMessageTypeMgt.SetupObjectNoList(TempObject);
-                TempObject.Type := "Object Type";
-                TempObject.ID := "Object ID";
-                IF NOT TempObject.FIND THEN
-                    FIELDERROR("Object ID");
+                TempObject."Object Type" := "Object Type";
+                TempObject."Object ID" := "Object ID";
+                if TempObject.IsEmpty then
+                    FieldError("Object ID");
             end;
         }
         field(6; "Object Name"; Text[250])
         {
-            CalcFormula = Lookup(AllObjWithCaption."Object Caption" WHERE("Object Type" = FIELD("Object Type"),
-                                                                           "Object ID" = FIELD("Object ID")));
+            CalcFormula = lookup(AllObjWithCaption."Object Caption" where("Object Type" = field("Object Type"),
+                                                                           "Object ID" = field("Object ID")));
             Caption = 'Object Name';
             Editable = false;
             FieldClass = FlowField;
@@ -115,10 +115,10 @@ table 50107 "RZW EDI Message Type"
         }
         field(16; "Qty. of New Messages"; Decimal)
         {
-            CalcFormula = Sum("RZW EDI Message Header"."Line Counter" WHERE("EDI Message Type" = FIELD(Code),
-                                                                         Status = CONST(New),
-                                                                         "Creation Date" = FIELD("Date Filter"),
-                                                                         Company = FIELD("Company Filter")));
+            CalcFormula = sum("RZW EDI Message Header"."Line Counter" where("EDI Message Type" = field(Code),
+                                                                         Status = const(New),
+                                                                         "Creation Date" = field("Date Filter"),
+                                                                         Company = field("Company Filter")));
             Caption = 'Qty. of New Messages';
             DecimalPlaces = 0 : 0;
             Editable = false;
@@ -126,10 +126,10 @@ table 50107 "RZW EDI Message Type"
         }
         field(17; "Qty. of Rejected Messages"; Decimal)
         {
-            CalcFormula = Sum("RZW EDI Message Header"."Line Counter" WHERE("EDI Message Type" = FIELD(Code),
-                                                                         Status = CONST(Rejected),
-                                                                         "Creation Date" = FIELD("Date Filter"),
-                                                                         Company = FIELD("Company Filter")));
+            CalcFormula = sum("RZW EDI Message Header"."Line Counter" where("EDI Message Type" = field(Code),
+                                                                         Status = const(Rejected),
+                                                                         "Creation Date" = field("Date Filter"),
+                                                                         Company = field("Company Filter")));
             Caption = 'Qty. of Rejected Messages';
             DecimalPlaces = 0 : 0;
             Editable = false;
@@ -137,10 +137,10 @@ table 50107 "RZW EDI Message Type"
         }
         field(18; "Qty. of Processed Messages"; Decimal)
         {
-            CalcFormula = Sum("RZW EDI Message Header"."Line Counter" WHERE("EDI Message Type" = FIELD(Code),
-                                                                         Status = CONST(Processed),
-                                                                         "Creation Date" = FIELD("Date Filter"),
-                                                                         Company = FIELD("Company Filter")));
+            CalcFormula = sum("RZW EDI Message Header"."Line Counter" where("EDI Message Type" = field(Code),
+                                                                         Status = const(Processed),
+                                                                         "Creation Date" = field("Date Filter"),
+                                                                         Company = field("Company Filter")));
             Caption = 'Qty. of Processed Messages';
             DecimalPlaces = 0 : 0;
             Editable = false;
@@ -148,8 +148,8 @@ table 50107 "RZW EDI Message Type"
         }
         field(19; "Qty. of Messages"; Decimal)
         {
-            CalcFormula = Sum("RZW EDI Message Header"."Line Counter" WHERE("EDI Message Type" = FIELD(Code),
-                                                                         Company = FIELD("Company Filter")));
+            CalcFormula = sum("RZW EDI Message Header"."Line Counter" where("EDI Message Type" = field(Code),
+                                                                         Company = field("Company Filter")));
             Caption = 'Qty. of Messages';
             DecimalPlaces = 0 : 0;
             Editable = false;
@@ -162,15 +162,15 @@ table 50107 "RZW EDI Message Type"
 
             trigger OnValidate()
             begin
-                IF NOT Blocked THEN BEGIN
-                    TESTFIELD("Source/Target Folder");
+                if not Blocked then begin
+                    TestField("Source/Target Folder");
                     TestFolder("Source/Target Folder");
 
-                    IF "Save a File Copy" THEN BEGIN
-                        TESTFIELD("Copy Folder");
+                    if "Save a File Copy" then begin
+                        TestField("Copy Folder");
                         TestFolder("Copy Folder");
-                    END;
-                END;
+                    end;
+                end;
             end;
         }
         field(21; Direction; Option)
@@ -181,19 +181,19 @@ table 50107 "RZW EDI Message Type"
 
             trigger OnValidate()
             begin
-                CASE Direction OF
+                case Direction of
                     Direction::Inbound:
-                        BEGIN
-                            IF (Direction <> xRec.Direction) OR ("Sequence (Batch-proc. Only)" = 0) THEN
+                        begin
+                            if (Direction <> xRec.Direction) or ("Sequence (Batch-proc. Only)" = 0) then
                                 "Sequence (Batch-proc. Only)" := 1;
-                        END;
+                        end;
                     Direction::Outbound:
-                        BEGIN
-                            "Auto-Process" := FALSE;
-                            IF (Direction <> xRec.Direction) OR ("Sequence (Batch-proc. Only)" = 0) THEN
+                        begin
+                            "Auto-Process" := false;
+                            if (Direction <> xRec.Direction) or ("Sequence (Batch-proc. Only)" = 0) then
                                 "Sequence (Batch-proc. Only)" := 2;
-                        END;
-                END;
+                        end;
+                end;
             end;
         }
         field(22; "Save a File Copy"; Boolean)
@@ -202,8 +202,8 @@ table 50107 "RZW EDI Message Type"
 
             trigger OnValidate()
             begin
-                IF "Save a File Copy" THEN
-                    VALIDATE("Copy Folder");
+                if "Save a File Copy" then
+                    Validate("Copy Folder");
             end;
         }
         field(23; "Copy Folder"; Text[250])
@@ -212,11 +212,11 @@ table 50107 "RZW EDI Message Type"
 
             trigger OnValidate()
             begin
-                IF "Copy Folder" = '' THEN BEGIN
-                    IF "Save a File Copy" THEN
-                        Blocked := TRUE;
-                    EXIT;
-                END;
+                if "Copy Folder" = '' then begin
+                    if "Save a File Copy" then
+                        Blocked := true;
+                    exit;
+                end;
                 TestFolder("Copy Folder");
             end;
         }
@@ -262,16 +262,16 @@ table 50107 "RZW EDI Message Type"
     var
         EDIMessageHeader: Record "RZW EDI Message Header";
     begin
-        EDIMessageHeader.SETCURRENTKEY("EDI Message Type", Status);
-        EDIMessageHeader.SETRANGE("EDI Message Type", Code);
-        EDIMessageHeader.SETFILTER(Status, '%1|%2', EDIMessageHeader.Status::New, EDIMessageHeader.Status::Rejected);
-        IF NOT EDIMessageHeader.ISEMPTY THEN
-            ERROR(Text003, TABLECAPTION, Code);
+        EDIMessageHeader.SetCurrentKey("EDI Message Type", Status);
+        EDIMessageHeader.SetRange("EDI Message Type", Code);
+        EDIMessageHeader.SetFilter(Status, '%1|%2', EDIMessageHeader.Status::New, EDIMessageHeader.Status::Rejected);
+        if not EDIMessageHeader.IsEmpty then
+            Error(Text003, TableCaption, Code);
     end;
 
     trigger OnInsert()
     begin
-        VALIDATE(Direction);
+        Validate(Direction);
     end;
 
     var
@@ -280,9 +280,9 @@ table 50107 "RZW EDI Message Type"
         Text003: Label 'There are non-processed EDI Messages for %1 %2. You cannot delete it.';
         Text004: Label '%1 Inbound EDI Messages of type %2 were made.';
         Text005: Label '%1 Outbound EDI Messages of type %2 were made.';
-    // EDIMessageTypeMgt: Codeunit "90010"; //TODO: create codeunit for managing EDI Message Types
+        EDIMessageTypeMgt: Codeunit "RZW EDI Message Type Mgt."; //TODO: create codeunit for managing EDI Message Types
 
-    procedure TestFolder(var UseFolderName: Text[1024])
+    internal procedure TestFolder(var UseFolderName: Text[250])
     var
     // FileMgt: Codeunit "File Management"; // TODO: build to check if the specified file location exists
     begin
@@ -291,40 +291,40 @@ table 50107 "RZW EDI Message Type"
         //     ERROR(Text001, UseFolderName);
     end;
 
-    procedure OpenExplorer(FilePath: Text[1024])
+    internal procedure OpenExplorer(FilePath: Text[1024])
     var
         ExplorerPath: Text[1024];
     begin
-        HYPERLINK(FilePath);
+        Hyperlink(FilePath);
     end;
 
-    procedure StartEDIObject()
+    internal procedure StartEDIObject()
     var
         QtyBefore: Integer;
         QtyAfter: Integer;
     begin
-        CALCFIELDS("Qty. of Messages");
+        CalcFields("Qty. of Messages");
         QtyBefore := "Qty. of Messages";
 
-        CLEAR(EDIMessageTypeMgt);
-        EDIMessageTypeMgt.RUN(Rec);
+        Clear(EDIMessageTypeMgt);
+        EDIMessageTypeMgt.Run(Rec);
 
-        CALCFIELDS("Qty. of Messages");
+        CalcFields("Qty. of Messages");
         QtyAfter := "Qty. of Messages";
 
-        CASE Direction OF
+        case Direction of
             Direction::Inbound:
-                MESSAGE(Text004, (QtyAfter - QtyBefore), Code);
+                Message(Text004, (QtyAfter - QtyBefore), Code);
             Direction::Outbound:
-                MESSAGE(Text005, (QtyAfter - QtyBefore), Code);
-        END;
+                Message(Text005, (QtyAfter - QtyBefore), Code);
+        end;
     end;
 
-    procedure GetStyle(): Text
+    internal procedure GetStyle(): Text
     begin
-        IF Blocked OR "Test Modus" THEN
-            EXIT('UnFavorable');
-        EXIT('Favorable');
+        if Blocked or "Test Modus" then
+            exit('UnFavorable');
+        exit('Favorable');
     end;
 }
 

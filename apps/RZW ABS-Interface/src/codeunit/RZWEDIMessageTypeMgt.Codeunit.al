@@ -1,4 +1,4 @@
-codeunit 50100 "RZW EDI Message Type Mgt."
+codeunit 50110 "RZW EDI Message Type Mgt."
 {
     TableNo = "RZW EDI Message Type";
 
@@ -42,7 +42,7 @@ codeunit 50100 "RZW EDI Message Type Mgt."
         EDIMessageHeader: Record "RZW EDI Message Header";
         Cust: Record Customer;
         TempObjectGlobal: Record AllObjWithCaption temporary;
-        // InbEDIMsgProcess: Codeunit "90011";
+        InbEDIMsgProcess: Codeunit "RZW Inb. EDI Msg.-Process";
         Window: Dialog;
         HideDialog: Boolean;
         Text001: Label 'One moment please....';
@@ -54,7 +54,7 @@ codeunit 50100 "RZW EDI Message Type Mgt."
         //  EDIInputFile: Record "File"; // TODO: list  of files that are to be processed
         // EDIImportData: XmlPort "90000";
         FileMgt: Codeunit "File Management";
-        // InbEDIMessageProcess: Codeunit "90011";
+        InbEDIMessageProcess: Codeunit "RZW Inb. EDI Msg.-Process";
         ServerFileName: Text;
         TempBlob: Codeunit "Temp Blob";
         NVInstream: InStream;
@@ -124,7 +124,7 @@ codeunit 50100 "RZW EDI Message Type Mgt."
                 if InbEDIMessageProcess.RUN(EDIMessageHeader2) then;
             end else begin
                 MySessionID := 0;
-                STARTSESSION(MySessionID, Codeunit::"Inb. EDI Msg.-Process", EDIMessageHeader.Company, EDIMessageHeader2);
+                STARTSESSION(MySessionID, Codeunit::"RZW Inb. EDI Msg.-Process", EDIMessageHeader.Company, EDIMessageHeader2);
 
                 Continue := false;
                 i := 0;
@@ -149,7 +149,7 @@ codeunit 50100 "RZW EDI Message Type Mgt."
     var
         EDIMessageHeader2: Record "RZW EDI Message Header";
         // ExportABSCustBalance: Report "90001";
-        // OutbEDIMessageProcess: Codeunit "90013";
+        OutbEDIMessageProcess: Codeunit "RZW Outb. EDI Msg. Process";
         MySessionID: Integer;
         MaxWaitingTime: Integer;
         i: Integer;
@@ -208,7 +208,7 @@ codeunit 50100 "RZW EDI Message Type Mgt."
         until EDIMessageHeader.Next() = 0;
     end;
 
-    procedure CreateEDIMessage(var EDIMessageHeader2: Record "RZW EDI Message Header"; UseCode: Code[10]; UseDirection: Option Inbound,Outbound)
+    internal procedure CreateEDIMessage(var EDIMessageHeader2: Record "RZW EDI Message Header"; UseCode: Code[10]; UseDirection: Option Inbound,Outbound)
     begin
         EDIMessageHeader2.Init();
         EDIMessageHeader2."EDI Message Type" := UseCode;
@@ -218,12 +218,12 @@ codeunit 50100 "RZW EDI Message Type Mgt."
         EDIMessageHeader2.Insert(true);
     end;
 
-    procedure FinalizeEDIMessage(var EDIMessageHeader2: Record "RZW EDI Message Header")
+    internal procedure FinalizeEDIMessage(var EDIMessageHeader2: Record "RZW EDI Message Header")
     begin
         EDIMessageHeader2.Modify();
     end;
 
-    procedure SetupObjectNoList(var TempObject: Record AllObjWithCaption temporary)
+    internal procedure SetupObjectNoList(var TempObject: Record AllObjWithCaption temporary)
     var
         Object: Record AllObjWithCaption;
     begin
@@ -254,7 +254,7 @@ codeunit 50100 "RZW EDI Message Type Mgt."
         TempObjectGlobal.Insert();
     end;
 
-    procedure SetHideDialog(NewHideDialog: Boolean)
+    internal procedure SetHideDialog(NewHideDialog: Boolean)
     begin
         HideDialog := NewHideDialog;
     end;

@@ -2,6 +2,7 @@ namespace RZW;
 
 using Microsoft.Foundation.NoSeries;
 using System.Environment;
+using System.IO;
 table 50108 "RZW EDI Message Header"
 {
     Caption = 'EDI Message Header';
@@ -110,33 +111,44 @@ table 50108 "RZW EDI Message Header"
         EDIMessageLine: Record "RZW EDI Message Line";
         EDIMessageLineDetail: Record "RZW EDI Message Line Detail";
     begin
-        EDIMessageLine.SETRANGE("EDI Message Type", "EDI Message Type");
-        EDIMessageLine.SETRANGE("Run No.", "Run No.");
-        if not EDIMessageLine.ISEMPTY then
-            EDIMessageLine.DELETEALL(true);
+        EDIMessageLine.SetRange("EDI Message Type", "EDI Message Type");
+        EDIMessageLine.SetRange("Run No.", "Run No.");
+        if not EDIMessageLine.IsEmpty then
+            EDIMessageLine.DeleteAll(true);
 
-        EDIMessageLineDetail.SETRANGE("EDI Message Type", "EDI Message Type");
-        EDIMessageLineDetail.SETRANGE("Run No.", "Run No.");
-        if not EDIMessageLineDetail.ISEMPTY then
-            EDIMessageLineDetail.DELETEALL;
+        EDIMessageLineDetail.SetRange("EDI Message Type", "EDI Message Type");
+        EDIMessageLineDetail.SetRange("Run No.", "Run No.");
+        if not EDIMessageLineDetail.IsEmpty then
+            EDIMessageLineDetail.DeleteAll();
 
-        if EXISTS(Filename) then
-            ERASE(Filename);
+        // TODO: add file deletion command here
+        // if EXISTS(Filename) then
+        //     ERASE(Filename);
     end;
 
     trigger OnInsert()
     var
-        NoSeriesMgt: Codeunit "No. Series";
+        EDIMessageHeader: Record "RZW EDI Message Header";
+        NoSeries: Codeunit "No. Series";
     begin
         if "Run No." = '' then begin
-            EDIMessageType.GET("EDI Message Type");
-            EDIMessageType.TESTFIELD("Message No. Series");
-            NoSeriesMgt.InitSeries(EDIMessageType."Message No. Series", xRec."No. Series", WorkDate(), "Run No.", "No. Series");
+            EDIMessageType.Get("EDI Message Type");
+            EDIMessageType.TestField("Message No. Series");
+            "No. Series" := EDIMessageType."Message No. Series";
+
+            if NoSeries.AreRelated("No. Series", xRec."No. Series") then
+                "No. Series" := xRec."No. Series";
+            "Run No." := NoSeries.GetNextNo("No. Series");
+
+            EDIMessageHeader.ReadIsolation(IsolationLevel::ReadUncommitted);
+            EDIMessageHeader.SetLoadFields("Run No.");
+            while EDIMessageHeader.Get("Run No.") do
+                "Run No." := NoSeries.GetNextNo("No. Series");
         end;
     end;
 
     var
-        EDIMessageType: Record "90009";
+        EDIMessageType: Record "RZW EDI Message Type";
         FileManagement: Codeunit "File Management";
         EDIExportFile: File;
         LineEntryNo: Integer;
@@ -145,38 +157,36 @@ table 50108 "RZW EDI Message Header"
         Text004: Label 'File %1 is created. ';
         Text006: Label 'A file with name %1 already exists.';
         Text007: Label '%1 %2 for %3 %4 contains lines for which the %5 is less than %6 ago. It cannot be deleted.';
-        LineEnd: ;
+        LineEnd: Label '', Locked = true;// the current files do not contain special line endings
 
-    [Scope('Internal')]
-    procedure ShowCard()
+    internal procedure ShowCard()
     var
         EDIMessageHeader: Record "RZW EDI Message Header";
     begin
-        EDIMessageHeader.GET("EDI Message Type", "Run No.");
+        EDIMessageHeader.Get("EDI Message Type", "Run No.");
         case Direction of
             Direction::Inbound:
                 case Status of
                     Status::New:
-                        Page.RUN(Page::"RZW Inb. EDI Message-New", EDIMessageHeader);
+                        Page.Run(Page::"RZW Inb.EDI Message-New", EDIMessageHeader);
                     Status::Rejected:
-                        Page.RUN(Page::"Inb. EDI Message - Rejected", EDIMessageHeader);
+                        Page.RUN(Page::"RZW Inb.EDI Message-Rejected", EDIMessageHeader);
                     Status::Processed:
-                        Page.RUN(Page::"RZW Inb. EDI Message-Processed", EDIMessageHeader);
+                        Page.Run(Page::"RZW Inb.EDI Message-Processed", EDIMessageHeader);
                 end;
             Direction::Outbound:
                 case Status of
                     Status::New:
-                        Page.RUN(Page::"Outb. EDI Message - New", EDIMessageHeader);
+                        Page.RUN(Page::"RZW Outb.EDI Message-New", EDIMessageHeader);
                     Status::Rejected:
-                        Page.RUN(Page::"Outb. EDI Message - Rejected", EDIMessageHeader);
+                        Page.RUN(Page::"RZW Outb.EDI Message-Rejected", EDIMessageHeader);
                     Status::Processed:
-                        Page.RUN(Page::"Outb. EDI Message - Processed", EDIMessageHeader);
+                        Page.RUN(Page::"RZW Outb.EDI Message-Processed", EDIMessageHeader);
                 end;
         end;
     end;
 
-    [Scope('Internal')]
-    procedure ShowEDIMessageDetails()
+    internal procedure ShowEDIMessageDetails()
     var
         EDIMessageLineDetails: Record "RZW EDI Message Line Detail";
     begin
@@ -191,12 +201,12 @@ table 50108 "RZW EDI Message Header"
         end;
     end;
 
-    procedure ShowFile()
+    internal procedure ShowFile()
     begin
         Hyperlink(Filename);
     end;
 
-    procedure WriteDetailLine(UseFieldNo: Integer; UseFieldContents: Text)
+    internal procedure WriteDetailLine(UseFieldNo: Integer; UseFieldContents: Text)
     var
         EDIMessageLineDetail: Record "RZW EDI Message Line Detail";
     begin
@@ -206,11 +216,11 @@ table 50108 "RZW EDI Message Header"
         EDIMessageLineDetail."Run No." := "Run No.";
         EDIMessageLineDetail."Line No." := LineEntryNo;
         EDIMessageLineDetail."Field No." := UseFieldNo;
-        EDIMessageLineDetail.Content := copystr(UseFieldContents, 1, maxstrlen(EDIMessageLineDetail.Content));
+        EDIMessageLineDetail.Content := CopyStr(UseFieldContents, 1, MaxStrLen(EDIMessageLineDetail.Content));
         EDIMessageLineDetail.Insert();
     end;
 
-    procedure ReCreateTextFile()
+    internal procedure ReCreateTextFile()
     begin
         //TODO:  Delete existing file if necessary
         // IF EXISTS(Filename) THEN
@@ -218,7 +228,7 @@ table 50108 "RZW EDI Message Header"
         CreateTextFile(true);
     end;
 
-    procedure CreateTextFile(ShowMessage: Boolean)
+    internal procedure CreateTextFile(ShowMessage: Boolean)
     var
         EDIMessageType: Record "RZW EDI Message Type";
         EDIMessageLineDetail: Record "RZW EDI Message Line Detail";
@@ -252,9 +262,10 @@ table 50108 "RZW EDI Message Header"
             Window.Open(Text001);
 
         Clear(EDIExportFile);
-        EDIExportFile.TEXTMODE(true);
-        EDIExportFile.WRITEMODE(true);
-        EDIExportFile.CREATE(TextFilename);
+        // TODO:  Create the text file if it does not exist
+        // EDIExportFile.TEXTMODE(true);
+        // EDIExportFile.WRITEMODE(true);
+        // EDIExportFile.CREATE(TextFilename);
 
         EDIMessageLineDetail.SetRange("EDI Message Type", "EDI Message Type");
         EDIMessageLineDetail.SetRange("Run No.", "Run No.");
@@ -264,31 +275,32 @@ table 50108 "RZW EDI Message Header"
                     Buffer := Buffer + EDIMessageLineDetail.Content
                 else begin
                     // First write the Buffer
-                    if Buffer <> '' then
-                        EDIExportFile.WRITE(STRSUBSTNO('%1%2', Buffer, LineEnd));
+                    // TODO:  Write the buffer to the export file if it is not empty
+                    // if Buffer <> '' then
+                    //     EDIExportFile.WRITE(STRSUBSTNO('%1%2', Buffer, LineEnd));
                     Buffer := EDIMessageLineDetail.Content;
                 end;
                 OldLineNo := EDIMessageLineDetail."Line No.";
             until EDIMessageLineDetail.Next() = 0;
 
-        // Write the last Line!
-        if Buffer <> '' then
-            EDIExportFile.WRITE(STRSUBSTNO('%1%2', Buffer, LineEnd));
-        EDIExportFile.CLOSE;
+        // TODO: Write the last Line and close the file!
+        // if Buffer <> '' then
+        //     EDIExportFile.WRITE(STRSUBSTNO('%1%2', Buffer, LineEnd));
+        // EDIExportFile.CLOSE;
 
         Filename := TextFilename;
         Modify();
 
-        // Save a Copy on another location
-        if EDIMessageType."Save a File Copy" then begin
-            FileManagement.CopyServerFile(TextFilename, CopyFileName, true);
-            if File.EXISTS(CopyFileName) then
-                File.ERASE(CopyFileName);
-            File.COPY(TextFilename, CopyFileName);
+        // TODO: Save a Copy on another location
+        // if EDIMessageType."Save a File Copy" then begin
+        //     FileManagement.CopyServerFile(TextFilename, CopyFileName, true);
+        //     if File.EXISTS(CopyFileName) then
+        //         File.ERASE(CopyFileName);
+        //     File.COPY(TextFilename, CopyFileName);
 
-            Filename := CopyFileName;
-            Modify();
-        end;
+        //     Filename := CopyFileName;
+        //     Modify();
+        // end;
 
         if GuiAllowed then
             Window.Close();
@@ -297,20 +309,17 @@ table 50108 "RZW EDI Message Header"
             Message(Text004, Filename);
     end;
 
-    [Scope('Internal')]
-    procedure InitLineEntryNo()
+    internal procedure InitLineEntryNo()
     begin
         LineEntryNo := 1;
     end;
 
-    [Scope('Internal')]
-    procedure IncrLineEntryNo()
+    internal procedure IncrLineEntryNo()
     begin
         LineEntryNo := LineEntryNo + 1;
     end;
 
-    [Scope('Internal')]
-    procedure GetLineEntryNo(): Integer
+    internal procedure GetLineEntryNo(): Integer
     begin
         exit(LineEntryNo);
     end;

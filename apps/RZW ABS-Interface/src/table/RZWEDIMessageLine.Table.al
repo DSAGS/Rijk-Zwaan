@@ -1,4 +1,10 @@
 namespace RZW;
+
+using Microsoft.Purchases.Document;
+using Microsoft.Purchases.Vendor;
+using Microsoft.Sales.Customer;
+using Microsoft.Sales.Document;
+using Microsoft.Sales.History;
 table 50109 "RZW EDI Message Line"
 {
     Caption = 'EDI Message Line';
@@ -16,27 +22,27 @@ table 50109 "RZW EDI Message Line"
         field(2; "Run No."; Code[20])
         {
             Caption = 'Run No.';
-            TableRelation = "RZW EDI Message Header"."Run No." WHERE("EDI Message" Type=FIELD("EDI Message Type"));
+            TableRelation = "RZW EDI Message Header"."Run No." WHERE("EDI Message Type" = FIELD("EDI Message Type"));
         }
-        field(3;"Line No.";Integer)
+        field(3; "Line No."; Integer)
         {
             Caption = 'Line No.';
         }
-        field(4;Description;Text[250])
+        field(4; Description; Text[250])
         {
             Caption = 'Description';
         }
-        field(5;"Line Counter";Decimal)
+        field(5; "Line Counter"; Decimal)
         {
             Caption = 'Line Counter';
             Editable = false;
             InitValue = 1;
         }
-        field(10;"Record-ID";RecordID)
+        field(10; "Record-ID"; RecordID)
         {
             Caption = 'Record-ID';
         }
-        field(20;"Document Status";Option)
+        field(20; "Document Status"; Option)
         {
             Caption = 'Document Status';
             Editable = false;
@@ -47,7 +53,7 @@ table 50109 "RZW EDI Message Line"
 
     keys
     {
-        key(Key1;"EDI Message Type","Run No.","Line No.")
+        key(Key1; "EDI Message Type", "Run No.", "Line No.")
         {
             Clustered = true;
             SumIndexFields = "Line Counter";
@@ -59,13 +65,12 @@ table 50109 "RZW EDI Message Line"
     }
 
     var
-        EDIMessageHeader: Record "90010";
+        EDIMessageHeader: Record "RZW EDI Message Header";
         Text001: Label 'The corresponding record cannot be shown.';
 
-    [Scope('Internal')]
-    procedure ShowDocument()
+    internal procedure ShowDocument()
     var
-        EDIMessageHeader: Record "90010";
+        EDIMessageHeader: Record "RZW EDI Message Header";
         Cust: Record "Customer";
         Vend: Record "Vendor";
         SalesHeader: Record "Sales Header";
@@ -81,7 +86,7 @@ table 50109 "RZW EDI Message Line"
     begin
         TESTFIELD("EDI Message Type");
         TESTFIELD("Run No.");
-        EDIMessageHeader.GET("EDI Message Type","Run No.");
+        EDIMessageHeader.GET("EDI Message Type", "Run No.");
 
         TESTFIELD("Record-ID");
         // IF RecRef.GET("Record-ID") THEN BEGIN
@@ -138,7 +143,7 @@ table 50109 "RZW EDI Message Line"
     local procedure GetMessageHeader()
     begin
         IF (EDIMessageHeader."EDI Message Type" <> "EDI Message Type") OR (EDIMessageHeader."Run No." <> "Run No.") THEN
-          EDIMessageHeader.GET("EDI Message Type","Run No.");
+            EDIMessageHeader.GET("EDI Message Type", "Run No.");
     end;
 }
 

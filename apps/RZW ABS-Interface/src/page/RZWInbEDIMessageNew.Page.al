@@ -1,60 +1,64 @@
-page 50107 "RZW Inb. EDI Message-New"
+namespace RZW;
+page 50107 "RZW Inb.EDI Message-New"
 {
     Caption = 'Inbound EDI Message - New';
     InsertAllowed = false;
     ModifyAllowed = false;
     SourceTable = "RZW EDI Message Header";
-    SourceTableView = SORTING(Direction, "Run No.")
-                      WHERE(Direction = FILTER(Inbound),
-                            Status = FILTER(New));
+    SourceTableView = sorting(Direction, "Run No.")
+                      where(Direction = filter(Inbound),
+                            Status = filter(New));
+    ApplicationArea = All;
+    UsageCategory = None;
 
     layout
     {
-        area(content)
+        area(Content)
         {
-            group()
+            group(General)
             {
-                field("EDI Message Type"; "EDI Message Type")
+                Caption = 'General';
+                field("EDI Message Type"; Rec."EDI Message Type")
                 {
                 }
-                field("Run No."; "Run No.")
+                field("Run No."; Rec."Run No.")
                 {
                 }
-                field("File Type"; "File Type")
+                field("File Type"; Rec."File Type")
                 {
                 }
-                field(Company; Company)
+                field(Company; Rec.Company)
                 {
                     Caption = 'Target Company';
                 }
             }
-            part(EDIMessageLines; 90010)
+            part(EDIMessageLines; "RZW Inb. EDI Message Subf.")
             {
-                SubPageLink = EDI Message Type=FIELD(EDI Message Type),
-                              Run No.=FIELD(Run No.);
+                SubPageLink = "EDI Message Type" = field("EDI Message Type"),
+                              "Run No." = field("Run No.");
             }
             group(Communication)
             {
                 Caption = 'Communication';
-                field("Creation Date"; "Creation Date")
+                field("Creation Date"; Rec."Creation Date")
                 {
                     Importance = Promoted;
                 }
-                field("Creation Time"; "Creation Time")
+                field("Creation Time"; Rec."Creation Time")
                 {
                 }
-                field(Filename; Filename)
+                field(Filename; Rec.Filename)
                 {
                 }
             }
         }
-        area(factboxes)
+        area(FactBoxes)
         {
-            systempart(; Links)
+            systempart(Links; Links)
             {
                 Visible = false;
             }
-            systempart(; Notes)
+            systempart(Notes; Notes)
             {
                 Visible = true;
             }
@@ -63,15 +67,15 @@ page 50107 "RZW Inb. EDI Message-New"
 
     actions
     {
-        area(navigation)
+        area(Navigation)
         {
-            action("EDI Message Type")
-            {
-                Caption = 'EDI Message Type';
-                Image = "Event";
-                RunObject = Page 90001;
-                RunPageLink = Code = FIELD(EDI Message Type);
-            }
+            // TODO: action("EDI Message Type")
+            // {
+            //     Caption = 'EDI Message Type';
+            //     Image = "Event";
+            //     RunObject = page 90001;
+            //     RunPageLink = Code = field("EDI Message Type");
+            // }
             group("M&essage")
             {
                 Caption = 'M&essage';
@@ -82,11 +86,11 @@ page 50107 "RZW Inb. EDI Message-New"
                     Image = Log;
                     Promoted = true;
                     PromotedCategory = Process;
-                    ShortCutKey = 'Shift+Ctrl+L';
+                    ShortcutKey = 'Shift+Ctrl+L';
 
                     trigger OnAction()
                     begin
-                        ShowEDIMessageDetails;
+                        Rec.ShowEDIMessageDetails();
                     end;
                 }
                 action("Show File")
@@ -96,31 +100,31 @@ page 50107 "RZW Inb. EDI Message-New"
 
                     trigger OnAction()
                     begin
-                        ShowFile;
+                        Rec.ShowFile();
                     end;
                 }
             }
         }
-        area(processing)
+        area(Processing)
         {
             group("P&osting")
             {
                 Caption = 'P&osting';
                 Image = Post;
-                action("Pr&ocess")
-                {
-                    Caption = 'Pr&ocess';
-                    Image = PostOrder;
-                    Promoted = true;
-                    PromotedCategory = Process;
-                    PromotedIsBig = true;
-                    ShortCutKey = 'F9';
+                // TODO: action("Pr&ocess")
+                // {
+                //     Caption = 'Pr&ocess';
+                //     Image = PostOrder;
+                //     Promoted = true;
+                //     PromotedCategory = Process;
+                //     PromotedIsBig = true;
+                //     ShortcutKey = 'F9';
 
-                    trigger OnAction()
-                    begin
-                        CODEUNIT.RUN(CODEUNIT::"Inb. EDI Msg.-Process (Y/N)", Rec);
-                    end;
-                }
+                //     trigger OnAction()
+                //     begin
+                //         Codeunit.RUN(Codeunit::"Inb. EDI Msg.-Process (Y/N)", Rec);
+                //     end;
+                // }
             }
         }
     }
