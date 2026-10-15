@@ -623,6 +623,66 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table RZW EDI Setup - Field VAT Correction Account G/L - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - NamedType 3114637384" size-unit="char" translate="yes" xml:space="preserve">
+          <source>There is nothing to process.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - NamedType Text001</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - NamedType 510963145" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The total No. of Documents in the File does not match the quantity indicated in the file header.\\Please check the file.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - NamedType Text031</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 2476940767" size-unit="char" translate="yes" xml:space="preserve">
+          <source>You cannot process EDI Message with Run No. %1, since earlier generated EDI Messages exist for the same company.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text000</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 3752334001" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Processing lines              #2######</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text002</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 1664139952" size-unit="char" translate="yes" xml:space="preserve">
+          <source>A %1 with %2 %3 could not be found.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text010</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 1026443335" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Multiple records of the type %1 have been found with %2 %3.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text011</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 2939533186" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Value %1 could not be converted into a Quantity.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text012</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 2301836569" size-unit="char" translate="yes" xml:space="preserve">
+          <source>An unknown Supplier Code has been used in message %1 (%2).</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text013</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 1940672225" size-unit="char" translate="yes" xml:space="preserve">
+          <source>%1 %2 does have %3 %4 as %5. This doens't match the value of the NAD-IV record in %6 %7. Please check your settings.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text020</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 2578368842" size-unit="char" translate="yes" xml:space="preserve">
+          <source>'</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text021</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 398908722" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Bónus - Alínea b) do nº 6 do Art. 16º do CIVA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType EmptyTextLine</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - Method 3070106566 - NamedType 1148659762" size-unit="char" translate="yes" xml:space="preserve">
+          <source>VAT correction</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method ProcessFTR01 - NamedType Text030</note>
+        </trans-unit>
         <trans-unit id="Page 2090415871 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Inb. EDI Message Details</source>
           <note from="Developer" annotates="general" priority="2"></note>
