@@ -42,7 +42,6 @@ codeunit 50110 "RZW EDI Message Type Mgt."
         EDIMessageHeader: Record "RZW EDI Message Header";
         Cust: Record Customer;
         TempObjectGlobal: Record AllObjWithCaption temporary;
-        InbEDIMsgProcess: Codeunit "RZW Inb. EDI Msg.-Process";
         Window: Dialog;
         HideDialog: Boolean;
         Text001: Label 'One moment please....';
@@ -54,7 +53,7 @@ codeunit 50110 "RZW EDI Message Type Mgt."
         //  EDIInputFile: Record "File"; // TODO: list  of files that are to be processed
         // EDIImportData: XmlPort "90000";
         FileMgt: Codeunit "File Management";
-        InbEDIMessageProcess: Codeunit "RZW Inb. EDI Msg.-Process";
+        // InbEDIMessageProcess: Codeunit "RZW Inb. EDI Msg.-Process";
         ServerFileName: Text;
         TempBlob: Codeunit "Temp Blob";
         NVInstream: InStream;
@@ -121,10 +120,10 @@ codeunit 50110 "RZW EDI Message Type Mgt."
             EDIMessageHeader2 := EDIMessageHeader;
 
             if (EDIMessageHeader.Company = CompanyName) then begin
-                if InbEDIMessageProcess.RUN(EDIMessageHeader2) then;
+                // if InbEDIMessageProcess.RUN(EDIMessageHeader2) then;
             end else begin
                 MySessionID := 0;
-                STARTSESSION(MySessionID, Codeunit::"RZW Inb. EDI Msg.-Process", EDIMessageHeader.Company, EDIMessageHeader2);
+                // STARTSESSION(MySessionID, Codeunit::"RZW Inb. EDI Msg.-Process", EDIMessageHeader.Company, EDIMessageHeader2);
 
                 Continue := false;
                 i := 0;
@@ -261,14 +260,19 @@ codeunit 50110 "RZW EDI Message Type Mgt."
 
     [EventSubscriber(ObjectType::Table, 36, 'OnAfterDeleteEvent', '', false, false)]
     local procedure OnAfterDeleteSalesHeader(var Rec: Record "Sales Header"; RunTrigger: Boolean)
+    var
+    // InbEDIMsgProcess: Codeunit "RZW Inb. EDI Msg.-Process";
+
     begin
-        InbEDIMsgProcess.ChangeSalesDocStatus(Rec, 3);
+        // InbEDIMsgProcess.ChangeSalesDocStatus(Rec, 3);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 80, 'OnAfterPostSalesDoc', '', false, false)]
     local procedure OnAfterPostSalesDoc(var SalesHeader: Record "Sales Header"; var GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line"; SalesShptHdrNo: Code[20]; RetRcpHdrNo: Code[20]; SalesInvHdrNo: Code[20]; SalesCrMemoHdrNo: Code[20])
+    var
+    // InbEDIMsgProcess: Codeunit "RZW Inb. EDI Msg.-Process";
     begin
-        InbEDIMsgProcess.ChangeSalesDocStatus(SalesHeader, 2);
+        // InbEDIMsgProcess.ChangeSalesDocStatus(SalesHeader, 2);
     end;
 }
 
