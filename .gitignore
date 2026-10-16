@@ -2,3 +2,6 @@ apps/RZW ABS-Interface/*.txt
 apps/RZW ABS-Interface/CAL-to-AL
 apps/.alpackages/
 apps/RZW ABS-Interface/src/codeunit/RZWInbEDIMsgProcess.Codeunit.txt
+apps/RZW ABS-Interface/Translations/Rijk Zwaan ABS interface.g.xlf
+apps/RZW ABS-Interface/*.app
+
