@@ -1,3 +1,4 @@
+namespace dgs.rzw.abs;
 codeunit 50113 "RZW Outb. EDI Msg. Process"
 {
     TableNo = "RZW EDI Message Header";

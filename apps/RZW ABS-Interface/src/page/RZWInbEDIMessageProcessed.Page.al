@@ -1,3 +1,4 @@
+namespace dgs.rzw.abs;
 page 50109 "RZW Inb.EDI Message-Processed"
 {
     Caption = 'Inbound EDI Message- Processed';

@@ -1,3 +1,11 @@
+namespace dgs.rzw.abs;
+
+using Microsoft.Finance.GeneralLedger.Posting;
+using Microsoft.Sales.Customer;
+using Microsoft.Sales.Document;
+using System.IO;
+using System.Reflection;
+using System.Utilities;
 codeunit 50110 "RZW EDI Message Type Mgt."
 {
     TableNo = "RZW EDI Message Type";
