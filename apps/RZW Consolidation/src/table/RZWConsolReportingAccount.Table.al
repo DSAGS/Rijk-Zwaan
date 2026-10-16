@@ -1,7 +1,7 @@
 namespace dsa.rzw.consolidation;
 table 50151 "RZW Consol. Reporting Account"
 {
-    Caption = 'Cons. Reporting Account';
+    Caption = 'Consolidation Reporting Account';
     DataClassification = CustomerContent;
     LookupPageId = "RZW Consol. Reporting Accounts";
 

@@ -1,11 +1,11 @@
 namespace dsa.rzw.consolidation;
 
-page 50152 "RZW Consol. Periods"
+page 50152 "RZW Consol. Reporting Periods"
 {
     ApplicationArea = All;
-    Caption = 'Rijk Zwaan Consolidation Periods';
+    Caption = 'Rijk Zwaan Consolidation ReportingPeriods';
     PageType = Card;
-    SourceTable = "RZW Consol. Period";
+    SourceTable = "RZW Consol. Reporting Period";
     UsageCategory = Administration;
 
     layout

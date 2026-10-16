@@ -1,7 +1,7 @@
 namespace dsa.rzw.consolidation;
-table 50152 "RZW Consol. Buffer"
+table 50152 "RZW Consol. Reporting Buffer"
 {
-    Caption = 'Consol. Buffer';
+    Caption = 'Consolidation Reporting Buffer';
     DataClassification = CustomerContent;
     TableType = Temporary;
 

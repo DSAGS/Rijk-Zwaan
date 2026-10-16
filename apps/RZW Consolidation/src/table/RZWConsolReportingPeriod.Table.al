@@ -1,9 +1,9 @@
 namespace dsa.rzw.consolidation;
-table 50153 "RZW Consol. Period"
+table 50153 "RZW Consol. Reporting Period"
 {
-    Caption = 'Consol. Period';
+    Caption = 'Consolidation Reporting Period';
     DataClassification = CustomerContent;
-    LookupPageId = "RZW Consol. Periods";
+    LookupPageId = "RZW Consol. Reporting Periods";
 
     fields
     {
