@@ -8,7 +8,7 @@ using Microsoft.Sales.Document;
 codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
 {
     var
-        InbEDIMsgProcess: codeunit "RZW Inb. EDI Msg.-Process";
+        InbEDIMsgProcess: Codeunit "RZW Inb. EDI Msg.-Process";
 
     local procedure ProcessLIN11(EDIMessageLineDetail: Record "RZW EDI Message Line Detail"; var CurrentEntryNo: Integer; var CurrentFieldNo: Integer)
     var
@@ -390,7 +390,7 @@ codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
 #pragma warning restore AA0139
     end;
 
-    local procedure ProcessLIN08(var EDIMessageLineDetail: Record "RZW EDI Message Line Detail"; UseDocType: enum "Sales Document Type"; UseDocNo: Code[20]; var NewCurrentEntryNo: Integer; var NewCurrentFieldNo: Integer)
+    local procedure ProcessLIN08(var EDIMessageLineDetail: Record "RZW EDI Message Line Detail"; UseDocType: Enum "Sales Document Type"; UseDocNo: Code[20]; var NewCurrentEntryNo: Integer; var NewCurrentFieldNo: Integer)
     var
         EDISetup: Record "RZW EDI Setup";
         EDIMessageLineDetail2: Record "RZW EDI Message Line Detail";
@@ -519,24 +519,24 @@ codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
                             // if (SalesLine.Type = SalesLine.Type::Item) and (SalesLine."No." <> '') and (TempSalesLine.Amount = 0) then
                             //     CreateAdditonalLine(SalesLine."Line No.", EmptyTextLine);
 
-                            IF ABSRecognitionSetup.Type = ABSRecognitionSetup.Type::"Charge (Item)" THEN
-                                IF SalesLine.Quantity <> 0 THEN BEGIN
-                                    ItemChargeAssgntSales.RESET;
-                                    ItemChargeAssgntSales.SETRANGE("Document Type", SalesLine."Document Type");
-                                    ItemChargeAssgntSales.SETRANGE("Document No.", SalesLine."Document No.");
-                                    ItemChargeAssgntSales.SETRANGE("Document Line No.", SalesLine."Line No.");
-                                    ItemChargeAssgntSales.SETRANGE("Item Charge No.", SalesLine."No.");
+                            if ABSRecognitionSetup.Type = ABSRecognitionSetup.Type::"Charge (Item)" then
+                                if SalesLine.Quantity <> 0 then begin
+                                    ItemChargeAssgntSales.Reset();
+                                    ItemChargeAssgntSales.SetRange("Document Type", SalesLine."Document Type");
+                                    ItemChargeAssgntSales.SetRange("Document No.", SalesLine."Document No.");
+                                    ItemChargeAssgntSales.SetRange("Document Line No.", SalesLine."Line No.");
+                                    ItemChargeAssgntSales.SetRange("Item Charge No.", SalesLine."No.");
 
-                                    IF NOT ItemChargeAssgntSales.FINDLAST THEN BEGIN
-                                        FromSalesLine.RESET;
-                                        FromSalesLine.SETRANGE("Document Type", SalesLine."Document Type");
-                                        FromSalesLine.SETRANGE("Document No.", SalesLine."Document No.");
-                                        FromSalesLine.SETRANGE(Type, FromSalesLine.Type::Item);
+                                    if not ItemChargeAssgntSales.FindLast() then begin
+                                        FromSalesLine.Reset();
+                                        FromSalesLine.SetRange("Document Type", SalesLine."Document Type");
+                                        FromSalesLine.SetRange("Document No.", SalesLine."Document No.");
+                                        FromSalesLine.SetRange(Type, FromSalesLine.Type::Item);
 
-                                        IF FromSalesLine.FIND('-') THEN
-                                            REPEAT
+                                        if FromSalesLine.Find('-') then
+                                            repeat
                                                 NextLineNo := NextLineNo + 10000;
-                                                ItemChargeAssgntSales2.INIT;
+                                                ItemChargeAssgntSales2.Init();
                                                 ItemChargeAssgntSales2."Document Type" := SalesLine."Document Type";
                                                 ItemChargeAssgntSales2."Document No." := SalesLine."Document No.";
                                                 ItemChargeAssgntSales2."Document Line No." := SalesLine."Line No.";
@@ -546,15 +546,14 @@ codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
                                                 ItemChargeAssgntSales2."Applies-to Doc. Line No." := NextLineNo;
                                                 ItemChargeAssgntSales2."Item No." := FromSalesLine."No.";
                                                 ItemChargeAssgntSales2.Description := FromSalesLine.Description;
-                                                ItemChargeAssgntSales2.VALIDATE("Unit Cost", ROUND(SalesLine."Line Amount", 0.0001));
+                                                ItemChargeAssgntSales2.Validate("Unit Cost", Round(SalesLine."Line Amount", 0.0001));
                                                 ItemChargeAssgntSales2."Item Charge No." := SalesLine."No.";
-                                                ItemChargeAssgntSales2.INSERT;
-                                                SuggestAmount.SuggestAssignment2(SalesLine, SalesLine.Quantity, 2);
-                                                FromSalesLine.CALCFIELDS("Qty. to Assign", "Qty. Assigned");
-                                                SalesLine.CALCFIELDS("Qty. to Assign", "Qty. Assigned");
-
-                                            UNTIL FromSalesLine.NEXT = 0;
-                                    END;
+                                                ItemChargeAssgntSales2.Insert();
+                                                SuggestAmount.SuggestAssignment(SalesLine, SalesLine.Quantity, SalesLine."Line Amount");
+                                                FromSalesLine.CalcFields("Qty. to Assign", "Qty. Assigned");
+                                                SalesLine.CalcFields("Qty. to Assign", "Qty. Assigned");
+                                            until FromSalesLine.Next() = 0;
+                                    end;
                                 end;
                         end;
                     end;
@@ -635,7 +634,7 @@ codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"RZW Inb. EDI Msg.-Process", OnProcessAdditionalSalesDocContentTypes, '', false, false)]
-    local procedure InbEDIMsgProcess_OnProcessAdditionalSalesDocContentTypes(EDIMessageLineDetail: Record "RZW EDI Message Line Detail"; UseDocType: enum "Sales Document Type"; UseDocNo: Code[20]; var NewCurrentEntryNo: Integer; var NewCurrentFieldNo: Integer)
+    local procedure InbEDIMsgProcess_OnProcessAdditionalSalesDocContentTypes(EDIMessageLineDetail: Record "RZW EDI Message Line Detail"; UseDocType: Enum "Sales Document Type"; UseDocNo: Code[20]; var NewCurrentEntryNo: Integer; var NewCurrentFieldNo: Integer)
     begin
         case EDIMessageLineDetail.Content of
             'HDR03':
@@ -644,5 +643,4 @@ codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
                 ProcessLIN08(EDIMessageLineDetail, UseDocType, UseDocNo, NewCurrentEntryNo, NewCurrentFieldNo);
         end;
     end;
-
 }

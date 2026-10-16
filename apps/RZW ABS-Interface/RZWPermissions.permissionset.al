@@ -1,7 +1,5 @@
 namespace dgs.rzw.abs;
 
-using RZW;
-
 permissionset 50100 RZWPermissions
 {
     Assignable = true;
