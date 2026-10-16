@@ -827,7 +827,7 @@ codeunit 50111 "RZW Inb. EDI Msg.-Process"
 
                         ReleaseSalesDocument.Run(GlobalSalesHeader);
                         GlobalSalesHeader.CalcFields("Amount Including VAT");
-                        if EDISetup."VAT calculation" = EDISetup."VAT calculation"::"Imported Amounts Leading" then
+                        if EDISetup."VAT calculation" = EDISetup."VAT calculation"::"Imported From Source" then
                             if Round(GlobalSalesHeader."Amount Including VAT", 0.01) <> Round(TotalAmtInclVAT, 0.01) then begin
                                 GlobalSalesLine.Init();
                                 GlobalSalesLine."Document Type" := GlobalSalesHeader."Document Type";

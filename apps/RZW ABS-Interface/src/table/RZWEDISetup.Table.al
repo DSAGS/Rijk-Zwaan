@@ -22,8 +22,9 @@ table 50100 "RZW EDI Setup"
         field(5; "VAT calculation"; option)
         {
             Caption = 'VAT calculation';
-            OptionMembers = "Imported Amounts Leading","Dynamics BC Leading";
-            OptionCaption = 'Imported Amounts Leading, Dynamics BC Leading';
+            OptionMembers = "Imported From Source","Calculated by Dynamics BC";
+            OptionCaption = 'Imported From Source, Calculated by Dynamics BC';
+            ToolTip = 'Here we can determine whether the VAT Amounts are imported from the source document or calculated based on the line amounts. with the former a correction line may be created if there are differences. See the VAT correction account field for more details.';
         }
         field(36; "Def. Customer Posting Group"; Code[20])
         {
@@ -49,6 +50,7 @@ table 50100 "RZW EDI Setup"
         {
             Caption = 'VAT Correction Account G/L';
             TableRelation = "G/L Account";
+            ToolTip = 'Specifies the VAT correction account to be used when there are differences between the imported VAT amounts and the calculated VAT amounts.';
         }
         field(45; "Def. Item Recognition Code"; Code[10])
         {
@@ -117,7 +119,7 @@ table 50100 "RZW EDI Setup"
         TestField("Def. Item Recognition Code");
         TestField("Def. VAT Recognition Code");
         TestField("Default Payment Terms Code");
-        if "VAT calculation" = "VAT calculation"::"Imported Amounts Leading" then
+        if "VAT calculation" = "VAT calculation"::"Imported From Source" then
             TestField("VAT Correction Account G/L");
     end;
 

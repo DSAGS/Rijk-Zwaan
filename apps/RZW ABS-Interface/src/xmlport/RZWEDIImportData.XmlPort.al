@@ -17,7 +17,7 @@ xmlport 50100 "RZW EDI Import Data"
             {
                 AutoSave = false;
                 XmlName = 'Integer';
-                SourceTableView = SORTING("EDI Message Type", "Run No.", "Line No.", "Field No.");
+                SourceTableView = sorting("EDI Message Type", "Run No.", "Line No.", "Field No.");
                 textelement(linecontent)
                 {
                     XmlName = 'EDIMessageContent';
@@ -31,69 +31,69 @@ xmlport 50100 "RZW EDI Import Data"
                 begin
                     NextLineNo := NextLineNo + 1;
                     NextFieldNo := 0;
-                    Identifier := FALSE;
-                    EndOfLine := FALSE;
-                    EDIMessageLineExists := FALSE;
+                    Identifier := false;
+                    EndOfLine := false;
+                    EDIMessageLineExists := false;
 
-                    WHILE NOT EndOfLine DO BEGIN
-                        GetFieldContents(LineContent, FieldValue);
+                    while not EndOfLine do begin
+                        GetFieldContents(linecontent, FieldValue);
 
-                        CASE NextFieldNo OF
+                        case NextFieldNo of
                             1:
-                                BEGIN
-                                    ABSRecordType.GET(FieldValue);
+                                begin
+                                    ABSRecordType.Get(FieldValue);
                                     Identifier := ABSRecordType."File Type" <> ABSRecordType."File Type"::" ";
-                                    IF Identifier THEN BEGIN
-                                        IF NOT FileTypeHasBeenSet THEN BEGIN
+                                    if Identifier then begin
+                                        if not FileTypeHasBeenSet then begin
                                             FileType := ABSRecordType."File Type";
-                                            FileTypeHasBeenSet := TRUE;
-                                        END;
-                                        IF FileType <> ABSRecordType."File Type" THEN
-                                            ERROR(Text003, currXMLport.FILENAME, FileType, ABSRecordType."File Type");
-                                    END;
-                                END;
+                                            FileTypeHasBeenSet := true;
+                                        end;
+                                        if FileType <> ABSRecordType."File Type" then
+                                            Error(Text003, currXMLport.Filename, FileType, ABSRecordType."File Type");
+                                    end;
+                                end;
                             2:
-                                IF FileTypeHasBeenSet AND NOT CompanyHasBeenSet THEN BEGIN
+                                if FileTypeHasBeenSet and not CompanyHasBeenSet then begin
                                     ABSCompanyCode := FieldValue;
-                                    CompanyHasBeenSet := TRUE;
-                                END ELSE
-                                    IF Identifier THEN
-                                        IF ABSCompanyCode <> FieldValue THEN
-                                            ERROR(Text002, currXMLport.FILENAME, ABSCompanyCode, FieldValue);
-                        END;
+                                    CompanyHasBeenSet := true;
+                                end else
+                                    if Identifier then
+                                        if ABSCompanyCode <> FieldValue then
+                                            Error(Text002, currXMLport.Filename, ABSCompanyCode, FieldValue);
+                        end;
 
-                        IF Identifier THEN
-                            IF ABSRecordTypeSetup.GET(ABSRecordType.Code, NextFieldNo) THEN
-                                IF ABSRecordTypeSetup."Descriptive Field" THEN BEGIN
-                                    IF NOT EDIMessageLine.GET(EDIMessageHeader."EDI Message Type", EDIMessageHeader."Run No.", NextLineNo) THEN BEGIN
-                                        EDIMessageLine.INIT;
+                        if Identifier then
+                            if ABSRecordTypeSetup.Get(ABSRecordType.Code, NextFieldNo) then
+                                if ABSRecordTypeSetup."Descriptive Field" then begin
+                                    if not EDIMessageLine.Get(EDIMessageHeader."EDI Message Type", EDIMessageHeader."Run No.", NextLineNo) then begin
+                                        EDIMessageLine.Init();
                                         EDIMessageLine."EDI Message Type" := EDIMessageHeader."EDI Message Type";
                                         EDIMessageLine."Run No." := EDIMessageHeader."Run No.";
                                         EDIMessageLine."Line No." := NextLineNo;
-                                        EDIMessageLine.INSERT;
-                                    END;
-                                    IdentifierDescr := STRSUBSTNO('%1: %2; ', ABSRecordTypeSetup."Field Name", AnsiToAsciiImport(FieldValue));
-                                    IF STRLEN(EDIMessageLine.Description) + STRLEN(IdentifierDescr) < MAXSTRLEN(EDIMessageLine.Description) THEN
+                                        EDIMessageLine.Insert();
+                                    end;
+                                    IdentifierDescr := StrSubstNo('%1: %2; ', ABSRecordTypeSetup."Field Name", AnsiToAsciiImport(FieldValue));
+                                    if StrLen(EDIMessageLine.Description) + StrLen(IdentifierDescr) < MaxStrLen(EDIMessageLine.Description) then
                                         EDIMessageLine.Description := EDIMessageLine.Description + IdentifierDescr;
-                                    EDIMessageLine.MODIFY;
+                                    EDIMessageLine.Modify();
 
-                                    EDIMessageLineExists := TRUE;
-                                END;
+                                    EDIMessageLineExists := true;
+                                end;
 
-                        EDIMessageLineDetail.INIT;
+                        EDIMessageLineDetail.Init();
                         EDIMessageLineDetail."EDI Message Type" := EDIMessageHeader."EDI Message Type";
                         EDIMessageLineDetail."Run No." := EDIMessageHeader."Run No.";
                         EDIMessageLineDetail."Line No." := NextLineNo;
                         EDIMessageLineDetail."Record Type" := ABSRecordType.Code;
                         EDIMessageLineDetail."Field No." := NextFieldNo;
                         EDIMessageLineDetail.Content := AnsiToAsciiImport(FieldValue);
-                        EDIMessageLineDetail.INSERT;
-                    END;
+                        EDIMessageLineDetail.Insert();
+                    end;
 
-                    IF EDIMessageLineExists THEN BEGIN
-                        EDIMessageLine.Description := DELCHR(EDIMessageLine.Description, '>', '; ');
-                        EDIMessageLine.MODIFY;
-                    END;
+                    if EDIMessageLineExists then begin
+                        EDIMessageLine.Description := DelChr(EDIMessageLine.Description, '>', '; ');
+                        EDIMessageLine.Modify();
+                    end;
                 end;
             }
         }
@@ -114,10 +114,10 @@ xmlport 50100 "RZW EDI Import Data"
     trigger OnPreXmlPort()
     begin
         FileType := FileType::" ";
-        FileTypeHasBeenSet := FALSE;
+        FileTypeHasBeenSet := false;
 
         // ANSI-ASCII conversion init...
-        MakeVariables;
+        MakeVariables();
     end;
 
     var
@@ -150,24 +150,24 @@ xmlport 50100 "RZW EDI Import Data"
         Position: Integer;
         Result: Text;
     begin
-        Position := STRPOS(UseContent, ';');
-        IF Position > 1 THEN BEGIN
-            Result := COPYSTR(UseContent, 1, Position - 1);
-            UseContent := COPYSTR(UseContent, Position + 1);
-        END ELSE BEGIN
+        Position := StrPos(UseContent, ';');
+        if Position > 1 then begin
+            Result := CopyStr(UseContent, 1, Position - 1);
+            UseContent := CopyStr(UseContent, Position + 1);
+        end else begin
             Result := UseContent;
-            EndOfLine := TRUE;
-        END;
+            EndOfLine := true;
+        end;
 
         // Some applications sometimes export some characters at the beginning of a file
         // This function deletes them
-        IF (NextLineNo = 1) AND (COPYSTR(Result, 1, 1) <> '"') THEN
-            WHILE COPYSTR(Result, 1, 1) <> '"' DO
-                Result := COPYSTR(Result, 2);
-        IF NOT ((COPYSTR(Result, 1, 1) = '"') OR (COPYSTR(Result, STRLEN(Result), 1) = '"')) THEN
-            ERROR(Text001, Result);
+        if (NextLineNo = 1) and (CopyStr(Result, 1, 1) <> '"') then
+            while CopyStr(Result, 1, 1) <> '"' do
+                Result := CopyStr(Result, 2);
+        if not ((CopyStr(Result, 1, 1) = '"') or (CopyStr(Result, StrLen(Result), 1) = '"')) then
+            Error(Text001, Result);
 
-        IsValue := DELCHR(Result, '<>', '"');
+        IsValue := DelChr(Result, '<>', '"');
         NextFieldNo := NextFieldNo + 1;
     end;
 
@@ -175,9 +175,9 @@ xmlport 50100 "RZW EDI Import Data"
     var
         ABSInterfaceCompanySetup: Record "RZW ABS Interface Comp. Setup";
     begin
-        IF NOT FileTypeHasBeenSet THEN
-            ERROR(Text004, currXMLport.FILENAME);
-        ABSInterfaceCompanySetup.GET(ABSCompanyCode);
+        if not FileTypeHasBeenSet then
+            Error(Text004, currXMLport.Filename);
+        ABSInterfaceCompanySetup.Get(ABSCompanyCode);
 
         NewFileType := FileType;
         NewTargetCompany := ABSInterfaceCompanySetup.Company;
@@ -185,24 +185,24 @@ xmlport 50100 "RZW EDI Import Data"
 
     internal procedure InitializeXMLport(EDIMessageHeader2: Record "RZW EDI Message Header")
     begin
-        EDIMessageHeader.GET(EDIMessageHeader2."EDI Message Type", EDIMessageHeader2."Run No.");
+        EDIMessageHeader.Get(EDIMessageHeader2."EDI Message Type", EDIMessageHeader2."Run No.");
     end;
 
     internal procedure AnsiToAsciiImport(InputTxt: Text[1024]): Text[1024]
     begin
-        MakeVariables;
+        MakeVariables();
         // Convert non-breaking spaces (ASCII code 'A0' HEX) into normal spaces (ASCII Code '20' HEX) first.
-        InputTxt := CONVERTSTR(InputTxt, ' ', ' ');
+        InputTxt := ConvertStr(InputTxt, ' ', ' ');
         // RZWHU - This conversion is not needed when property TextEncoding = WINDOWS
         // EXIT(CONVERTSTR(InputTxt,AnsiStr,AsciiStr));
         // RZWHU {*}
-        EXIT(InputTxt);
+        exit(InputTxt);
     end;
 
-    Internal procedure AsciiToAnsiExport(InputTxt: Text[1024]): Text[1024]
+    internal procedure AsciiToAnsiExport(InputTxt: Text[1024]): Text[1024]
     begin
-        MakeVariables;
-        EXIT(CONVERTSTR(InputTxt, AsciiStr, AnsiStr));
+        MakeVariables();
+        exit(ConvertStr(InputTxt, AsciiStr, AnsiStr));
     end;
 
     internal procedure MakeVariables()
@@ -241,15 +241,15 @@ xmlport 50100 "RZW EDI Import Data"
         CharVar[30] := 185;
         CharVar[31] := 179;
         CharVar[32] := 178;
-        AnsiStr := 'Ã³ÚÔõÓÕþÛÙÞ´¯ý' + FORMAT(CharVar[1]) + FORMAT(CharVar[2]) + FORMAT(CharVar[3]) + 'µã¶÷' + FORMAT(CharVar[4]);
-        AnsiStr := AnsiStr + '¹¨ Í' + FORMAT(CharVar[5]) + '°úÏÎâßÝ¾·±Ð¬' + FORMAT(CharVar[6]) + FORMAT(CharVar[7]);
-        AnsiStr := AnsiStr + '«¼¢' + FORMAT(CharVar[8]) + 'í½' + FORMAT(CharVar[9]) + '___ªª' + FORMAT(CharVar[10]) + FORMAT(CharVar[11]);
-        AnsiStr := AnsiStr + FORMAT(CharVar[12]) + '®ªª++óÑ++--+-+Ò' + FORMAT(CharVar[13]) + '++--ª-+ñ­ð';
-        AnsiStr := AnsiStr + FORMAT(CharVar[14]) + FORMAT(CharVar[15]) + FORMAT(CharVar[16]) + 'i' + FORMAT(CharVar[17]) + FORMAT(CharVar[18]);
-        AnsiStr := AnsiStr + '¤++__ª' + FORMAT(CharVar[19]) + FORMAT(CharVar[20]) + 'Ë' + FORMAT(CharVar[21]) + 'ÈÊ§';
-        AnsiStr := AnsiStr + FORMAT(CharVar[22]) + 'Á' + FORMAT(CharVar[23]) + 'Ì' + FORMAT(CharVar[24]) + FORMAT(CharVar[25]);
-        AnsiStr := AnsiStr + FORMAT(CharVar[26]) + '²¦»' + FORMAT(CharVar[27]) + '¡' + FORMAT(CharVar[28]) + '=¥Âº¸©' + FORMAT(CharVar[29]);
-        AnsiStr := AnsiStr + '¿À' + FORMAT(CharVar[30]) + FORMAT(CharVar[31]) + FORMAT(CharVar[32]) + '_';
+        AnsiStr := 'Ã³ÚÔõÓÕþÛÙÞ´¯ý' + Format(CharVar[1]) + Format(CharVar[2]) + Format(CharVar[3]) + 'µã¶÷' + Format(CharVar[4]);
+        AnsiStr := AnsiStr + '¹¨ Í' + Format(CharVar[5]) + '°úÏÎâßÝ¾·±Ð¬' + Format(CharVar[6]) + Format(CharVar[7]);
+        AnsiStr := AnsiStr + '«¼¢' + Format(CharVar[8]) + 'í½' + Format(CharVar[9]) + '___ªª' + Format(CharVar[10]) + Format(CharVar[11]);
+        AnsiStr := AnsiStr + Format(CharVar[12]) + '®ªª++óÑ++--+-+Ò' + Format(CharVar[13]) + '++--ª-+ñ­ð';
+        AnsiStr := AnsiStr + Format(CharVar[14]) + Format(CharVar[15]) + Format(CharVar[16]) + 'i' + Format(CharVar[17]) + Format(CharVar[18]);
+        AnsiStr := AnsiStr + '¤++__ª' + Format(CharVar[19]) + Format(CharVar[20]) + 'Ë' + Format(CharVar[21]) + 'ÈÊ§';
+        AnsiStr := AnsiStr + Format(CharVar[22]) + 'Á' + Format(CharVar[23]) + 'Ì' + Format(CharVar[24]) + Format(CharVar[25]);
+        AnsiStr := AnsiStr + Format(CharVar[26]) + '²¦»' + Format(CharVar[27]) + '¡' + Format(CharVar[28]) + '=¥Âº¸©' + Format(CharVar[29]);
+        AnsiStr := AnsiStr + '¿À' + Format(CharVar[30]) + Format(CharVar[31]) + Format(CharVar[32]) + '_';
     end;
 }
 
