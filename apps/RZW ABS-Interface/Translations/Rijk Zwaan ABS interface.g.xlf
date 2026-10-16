@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en-US" target-language="en-US" original="Rijk Zwaan">
+  <file datatype="xml" source-language="en-US" target-language="en-US" original="Rijk Zwaan ABS interface">
     <body>
       <group id="body">
         <trans-unit id="Table 2745511030 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
@@ -58,6 +58,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table RZW ABS Item Recognition Code - Field Description - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 529136636 - Field 2792303385 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>RZW BR Process As Freight Charge</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW ABS Item Recognition Code - Field RZW BR ProcessAsFreightCharge - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 1226221473 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>ABS Recognition Setup</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -82,11 +87,6 @@
           <source>Def. Costing Method</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table RZW ABS Recognition Setup - Field Def. Costing Method - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 1226221473 - Field 4165899631 - Property 62802879" size-unit="char" translate="yes" xml:space="preserve">
-          <source>FIFO,LIFO,Specific,Average,Standard</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Table RZW ABS Recognition Setup - Field Def. Costing Method - Property OptionCaption</note>
         </trans-unit>
         <trans-unit id="Table 1226221473 - Field 2846974056 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Def. Inventory Posting Group</source>
@@ -117,6 +117,16 @@
           <source>Payment Discount</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table RZW ABS Recognition Setup - Field Payment Discount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1226221473 - Field 2032880254 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>NCM Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW ABS Recognition Setup - Field RZW BR NCM Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1226221473 - Field 244267534 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Tax Area Setup Sales Region</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW ABS Recognition Setup - Field RZW BR TaxAreaSetupSalesRegion - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 1226221473 - Field 1878130204 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Type</source>
@@ -618,70 +628,40 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table RZW EDI Setup - Field Skip Bank Data in Import - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 1960541036 - Field 256504934 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>VAT calculation</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW EDI Setup - Field VAT calculation - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1960541036 - Field 256504934 - Property 62802879" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Imported Amounts Leading, Dynamics BC Leading</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW EDI Setup - Field VAT calculation - Property OptionCaption</note>
+        </trans-unit>
         <trans-unit id="Table 1960541036 - Field 715746628 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>VAT Correction Account G/L</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table RZW EDI Setup - Field VAT Correction Account G/L - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Codeunit 2051127343 - NamedType 3114637384" size-unit="char" translate="yes" xml:space="preserve">
-          <source>There is nothing to process.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - NamedType Text001</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2051127343 - NamedType 510963145" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Codeunit 2051127343 - NamedType 201849870" size-unit="char" translate="yes" xml:space="preserve">
           <source>The total No. of Documents in the File does not match the quantity indicated in the file header.\\Please check the file.</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - NamedType Text031</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - NamedType DocCountMismatchErr</note>
         </trans-unit>
-        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 2476940767" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Codeunit 2051127343 - NamedType 1494644" size-unit="char" translate="yes" xml:space="preserve">
+          <source>There is nothing to process.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - NamedType NothingToProcessErr</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 3934857847" size-unit="char" translate="yes" xml:space="preserve">
           <source>You cannot process EDI Message with Run No. %1, since earlier generated EDI Messages exist for the same company.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text000</note>
+          <note from="Developer" annotates="general" priority="2">%1 = Run No.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType EDIMessageProcessingErr</note>
         </trans-unit>
-        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 3752334001" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Processing lines              #2######</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text002</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 1664139952" size-unit="char" translate="yes" xml:space="preserve">
-          <source>A %1 with %2 %3 could not be found.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text010</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 1026443335" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Multiple records of the type %1 have been found with %2 %3.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text011</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 2939533186" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The Value %1 could not be converted into a Quantity.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text012</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 2301836569" size-unit="char" translate="yes" xml:space="preserve">
-          <source>An unknown Supplier Code has been used in message %1 (%2).</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text013</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 1940672225" size-unit="char" translate="yes" xml:space="preserve">
-          <source>%1 %2 does have %3 %4 as %5. This doens't match the value of the NAD-IV record in %6 %7. Please check your settings.</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text020</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 2578368842" size-unit="char" translate="yes" xml:space="preserve">
-          <source>'</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType Text021</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2051127343 - Method 1665861916 - NamedType 398908722" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Bónus - Alínea b) do nº 6 do Art. 16º do CIVA</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method OnRun - NamedType EmptyTextLine</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2051127343 - Method 3070106566 - NamedType 1148659762" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Codeunit 2051127343 - Method 3070106566 - NamedType 3495741201" size-unit="char" translate="yes" xml:space="preserve">
           <source>VAT correction</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method ProcessFTR01 - NamedType Text030</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit RZW Inb. EDI Msg.-Process - Method ProcessFTR01 - NamedType VatCorrectionLbl</note>
         </trans-unit>
         <trans-unit id="Page 2090415871 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Inb. EDI Message Details</source>
@@ -933,6 +913,26 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page RZW Outb.EDI Message-Rejected - Action P&amp;osting - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 3332851604 - Field 1830241022 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1192395785">
+          <source>ABS Order Reference</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension RZW BR Sales Header - Field RZW BR ABS Order Reference - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 635558299 - Field 2124583703 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2574427010">
+          <source>RZW BR ABS Item No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension RZW BR Sales Line - Field RZW BR ABS Item No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 635558299 - Field 2241557720 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2574427010">
+          <source>RZW BR Batch No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension RZW BR Sales Line - Field RZW BR Batch No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 635558299 - Field 1724065318 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2574427010">
+          <source>Country/Region of Origin Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension RZW BR Sales Line - Field RZW BR Ctry/Reg.of Origin Code - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Codeunit 3513843464 - NamedType 3114637384" size-unit="char" translate="yes" xml:space="preserve">
           <source>One moment please....</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -997,6 +997,31 @@
           <source>P&amp;osting</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page RZW Inb.EDI Message-Processed - Action P&amp;osting - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 260295019 - EnumValue 1371923692 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source> </source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum RZW Line Type - EnumValue   - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 260295019 - EnumValue 1149817746 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Charge (Item)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum RZW Line Type - EnumValue Charge (Item) - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 260295019 - EnumValue 4274826855 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>G/L Account</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum RZW Line Type - EnumValue G/L Account - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 260295019 - EnumValue 3276313895 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Item</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum RZW Line Type - EnumValue Item - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 260295019 - EnumValue 348912950 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Resource</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum RZW Line Type - EnumValue Resource - Property Caption</note>
         </trans-unit>
       </group>
     </body>

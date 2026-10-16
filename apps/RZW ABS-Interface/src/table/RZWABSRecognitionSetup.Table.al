@@ -25,11 +25,9 @@ table 50103 "RZW ABS Recognition Setup"
             Caption = 'ABS VAT Recognition Code';
             TableRelation = "RZW ABS VAT Recognition Code";
         }
-        field(3; Type; Option)
+        field(3; Type; Enum "RZW Line Type")
         {
             Caption = 'Type';
-            OptionCaption = ' ,G/L Account,Item,Resource';
-            OptionMembers = " ","G/L Account",Item,Resource;
         }
         field(4; "No."; Code[20])
         {

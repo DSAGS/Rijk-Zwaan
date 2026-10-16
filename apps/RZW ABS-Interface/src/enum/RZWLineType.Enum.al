@@ -1,3 +1,4 @@
+namespace RZW;
 enum 50103 "RZW Line Type"
 {
     Extensible = true;
@@ -7,4 +8,5 @@ enum 50103 "RZW Line Type"
     value(1; "G/L Account") { Caption = 'G/L Account'; }
     value(2; "Item") { Caption = 'Item'; }
     value(3; "Resource") { Caption = 'Resource'; }
+    value(5; "Charge (Item)") { Caption = 'Charge (Item)'; }
 }
