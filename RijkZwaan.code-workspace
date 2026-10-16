@@ -6,12 +6,17 @@
             "path": "Apps/.alpackages"
         },
         {
+            "name": "RZW Azure Integration",
+            "path": "apps/RZW Azure Integration"
+        },
+        {
             "name": "RZW ABS-Interface",
             "path": "Apps/RZW ABS-Interface"
         },
         {
+            "name": "RZW Consolidation",
             "path": "apps/RZW Consolidation"
-        },		
+        },
         {
             "name": ".github",
             "path": ".github"
@@ -20,7 +25,6 @@
             "name": ".AL-Go",
             "path": ".AL-Go"
         }
-
     ],
     "launch": {
         "configurations": [

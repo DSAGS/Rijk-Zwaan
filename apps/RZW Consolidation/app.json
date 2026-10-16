@@ -3,8 +3,8 @@
   "name": "Rijk Zwaan Consolidation",
   "publisher": "DSA Global Solutions",
   "version": "27.0.0.0",
-  "brief": "Consolidation Interface for RIjk Zwaan",
-  "description": "Consolidation Interface for RIjk Zwaan",
+  "brief": "Consolidation Interface for Rijk Zwaan",
+  "description": "Consolidation Interface for Rijk Zwaan",
   "privacyStatement": "https://www.dsa-gs.com/privacy-policy",
   "EULA": "https://www.dsa-gs.com/eula",
   "help": "https://www.dsa-gs.com/help",
@@ -12,14 +12,21 @@
   "logo": "./logo/ExtensionLogo.png",
   "contextSensitiveHelpUrl": "https://www.dsa-gs.com/help",
   "applicationInsightsConnectionString": "",
-  "dependencies": [],
+  "dependencies": [
+        {
+            "id": "84511057-47a9-4a1a-aede-844328f9f8b9",
+            "name": "Rijk Zwaan Azure Integration",
+            "publisher": "DSA Global Solutions",
+            "version": "27.0.0.0"
+        }
+  ],
   "screenshots": [],
   "platform": "1.0.0.0",
   "application": "27.0.0.0",
   "idRanges": [
     {
       "from": 50150,
-      "to": 50199
+      "to": 50174
     }
   ],
   "resourceExposurePolicy": {

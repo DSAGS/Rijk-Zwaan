@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="en-US" original="Rijk Zwaan Consolidation">
+    <body>
+      <group id="body">
+        <trans-unit id="Table 3530652701 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Consol. Buffer</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Buffer - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3530652701 - Field 636392376 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Amount</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Buffer - Field Amount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3530652701 - Field 1062593057 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Consolidation Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Buffer - Field Consolidation Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3530652701 - Field 2080323628 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Debit/Credit</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Buffer - Field Debet/Credit - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3530652701 - Field 2080323628 - Property 62802879" size-unit="char" translate="yes" xml:space="preserve">
+          <source> ,Debit,Credit</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Buffer - Field Debet/Credit - Property OptionCaption</note>
+        </trans-unit>
+        <trans-unit id="Table 2361822882 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Consol. Period</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Period - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2361822882 - Field 1778072510 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies if the reporting period belongs to a closed fiscal year.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Period - Field Closed - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 2361822882 - Field 1778072510 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Closed</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Period - Field Closed - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2361822882 - Field 2961552353 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the name of the reporting period.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Period - Field Name - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 2361822882 - Field 2961552353 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Period - Field Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2361822882 - Field 1741579870 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Indicates whether the reporting period belongs to a new fiscal year for the consolidation company.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Period - Field New Fiscal Year Consol. Comp. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 2361822882 - Field 1741579870 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>New Fiscal Year Consol. Company</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Period - Field New Fiscal Year Consol. Comp. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2361822882 - Field 3293730985 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies if the reporting period has been reported.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Period - Field Reported - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 2361822882 - Field 3293730985 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Reported</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Period - Field Reported - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2361822882 - Field 460889064 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date that the reporting period will begin.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Period - Field Starting Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 2361822882 - Field 460889064 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Starting Date</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Period - Field Starting Date - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1713440704 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cons. Reporting Account</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Reporting Account - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1713440704 - Field 3004954119 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies a unique code to identify this reporting account.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Reporting Account - Field Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 1713440704 - Field 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Reporting Account - Field Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1713440704 - Field 2080323628 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies whether this reporting account is a debit or credit account.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Reporting Account - Field Debet/Credit - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 1713440704 - Field 2080323628 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Debit/Credit</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Reporting Account - Field Debet/Credit - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1713440704 - Field 2080323628 - Property 62802879" size-unit="char" translate="yes" xml:space="preserve">
+          <source> ,Debit,Credit</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Reporting Account - Field Debet/Credit - Property OptionCaption</note>
+        </trans-unit>
+        <trans-unit id="Table 1713440704 - Field 2961552353 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the name of this reporting account.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Reporting Account - Field Name - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 1713440704 - Field 2961552353 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Reporting Account - Field Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 1713440704 - Field 3264063918 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the worldwide name of this reporting account.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Reporting Account - Field Worldwide Name - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 1713440704 - Field 3264063918 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Worldwide Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Reporting Account - Field Worldwide Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2596371832 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Consolidation Setup</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Setup - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2596371832 - Field 3103476245 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies a unique number that will be assigned to the exported data, as to distinguish between different organizations.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Setup - Field Organizational Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Table 2596371832 - Field 3103476245 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Organizational Code</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Setup - Field Organizational Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 2596371832 - Field 1663593181 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Primary Key</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table RZW Consol. Setup - Field Primary Key - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1528804175 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Consol. Periods</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page RZW Consol. Periods - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1528804175 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page RZW Consol. Periods - Control General - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 479919105 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Consol. Reporting Accounts</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page RZW Consol. Reporting Accounts - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3658524558 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Consolidation Setup</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page RZW Consolidation Setup - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3658524558 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page RZW Consolidation Setup - Control General - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Consol. Export</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - NamedType 1789506343" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Please enter both the starting date and ending dates for the Reporting Period.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - NamedType MissingDateErr</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - NamedType 732759939" size-unit="char" translate="yes" xml:space="preserve">
+          <source> %1 must be specified for %2 %3.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - NamedType Text004</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - NamedType 1370456556" size-unit="char" translate="yes" xml:space="preserve">
+          <source> %1 is not a valid %2.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - NamedType Text005</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - NamedType 2008153173" size-unit="char" translate="yes" xml:space="preserve">
+          <source> %1 is not the last date of a reporting period.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - NamedType Text006</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - NamedType 2645849790" size-unit="char" translate="yes" xml:space="preserve">
+          <source> Reporting period Ending Date must be later than Starting Date.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - NamedType Text007</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - NamedType 3283546407" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Reporting period Ending Date must belong to the same Fiscal year as the Starting Date.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - NamedType Text008</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - NamedType 3921243024" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Period %1 has already been reported to the consolidation company.\Please check Reporting period Ending Date.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - NamedType Text009</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - NamedType 1664139952" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Please enter a valid file path.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - NamedType Text010</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - NamedType 4214926420" size-unit="char" translate="yes" xml:space="preserve">
+          <source>%1 "%2" is not correct for %3 %4.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - NamedType Text014</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - NamedType 3577229803" size-unit="char" translate="yes" xml:space="preserve">
+          <source>An inconsistency has occurred within the G/L entries.\Please check the amounts.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - NamedType Text015</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - NamedType 1195352358" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Debit Amount must be equal to the Credit Amount.\Please check whether field %1 was filled in correctly in table %2.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - NamedType Text016</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - Control 2346885236 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Options</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - Control Options - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - Control 3790710287 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the period ending date.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - Control EndingDateReq - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - Control 3790710287 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Period Ending Date</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - Control EndingDateReq - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - Control 1629215398 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the period starting date.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - Control StartingDateReq - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Report 3383505673 - Control 1629215398 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Period Starting Date</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report RZW Consol. Export - Control StartingDateReq - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 159698494 - Field 1713440704 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 4274826855">
+          <source>Specifies the RZW Consol. Reporting Account.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension RZW G/L Account - Field RZW Consol. Reporting Account - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 159698494 - Field 1713440704 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 4274826855">
+          <source>RZW Consol. Reporting Account</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension RZW G/L Account - Field RZW Consol. Reporting Account - Property Caption</note>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>
