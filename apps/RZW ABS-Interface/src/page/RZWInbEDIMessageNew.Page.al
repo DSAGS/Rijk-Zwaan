@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 page 50107 "RZW Inb.EDI Message-New"
 {
     Caption = 'Inbound EDI Message - New';

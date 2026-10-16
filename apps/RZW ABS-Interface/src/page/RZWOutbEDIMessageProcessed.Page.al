@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 page 50117 "RZW Outb.EDI Message-Processed"
 {
     Caption = 'Outbound EDI Message - Processed';

@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 page 50116 "RZW Outb.EDI Message-Rejected"
 {
     Caption = 'Outbound EDI Message - Rejected';

@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 
 using Microsoft.Purchases.Document;
 using Microsoft.Purchases.Vendor;

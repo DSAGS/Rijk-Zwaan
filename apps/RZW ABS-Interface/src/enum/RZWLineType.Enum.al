@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 enum 50103 "RZW Line Type"
 {
     Extensible = true;

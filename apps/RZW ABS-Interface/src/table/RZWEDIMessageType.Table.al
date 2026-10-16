@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 using Microsoft.Foundation.NoSeries;
 using System.Environment;
 using System.Reflection;

@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 
 using Microsoft.Finance.GeneralLedger.Setup;
 using Microsoft.Purchases.Vendor;

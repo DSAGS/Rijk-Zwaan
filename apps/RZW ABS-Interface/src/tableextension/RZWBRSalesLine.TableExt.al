@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 
 using Microsoft.Foundation.Address;
 using Microsoft.Sales.Document;

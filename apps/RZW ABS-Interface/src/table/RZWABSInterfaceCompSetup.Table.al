@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 
 using System.Environment;
 table 50104 "RZW ABS Interface Comp. Setup"

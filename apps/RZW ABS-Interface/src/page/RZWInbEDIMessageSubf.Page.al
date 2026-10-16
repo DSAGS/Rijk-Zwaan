@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 page 50110 "RZW Inb. EDI Message Subf."
 {
     Caption = 'Lines';
@@ -34,7 +34,7 @@ page 50110 "RZW Inb. EDI Message Subf."
         {
             action(Show)
             {
-                    Caption = 'Show Document';
+                Caption = 'Show Document';
 
                 trigger OnAction()
                 begin

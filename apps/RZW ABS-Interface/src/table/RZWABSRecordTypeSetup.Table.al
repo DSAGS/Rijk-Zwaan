@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 table 50106 "RZW ABS Record Type Setup"
 {
     Caption = 'ABS Record Type Setup';

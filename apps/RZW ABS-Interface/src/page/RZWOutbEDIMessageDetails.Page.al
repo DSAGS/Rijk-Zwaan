@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 page 50119 "RZW Outb. EDI Message Details"
 {
     Caption = 'Outb. EDI Message Details';

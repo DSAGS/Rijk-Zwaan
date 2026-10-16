@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 using Microsoft.Finance.GeneralLedger.Setup;
 using Microsoft.Foundation.UOM;
 using Microsoft.Inventory.Item;
@@ -398,6 +398,7 @@ codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
         ABSRecognitionSetup: Record "RZW ABS Recognition Setup";
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
+        FromSalesLine: Record "Sales Line";
         TempSalesLine: Record "Sales Line" temporary;
         ItemChargeAssgntSales: Record "Item Charge Assignment (Sales)";
         ItemChargeAssgntSales2: Record "Item Charge Assignment (Sales)";
@@ -405,6 +406,7 @@ codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
         TmpItemRecognitionCode: Code[10];
         TmpVATRecognitionCode: Code[10];
         TempDescription: array[2] of Text;
+        NextLineNo: Integer;
         Sign: Integer;
         IsItemLine: Boolean;
     begin
@@ -517,7 +519,43 @@ codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
                             // if (SalesLine.Type = SalesLine.Type::Item) and (SalesLine."No." <> '') and (TempSalesLine.Amount = 0) then
                             //     CreateAdditonalLine(SalesLine."Line No.", EmptyTextLine);
 
-                            //     IF ABSRecognitionSetup.Type = ABSRecognitionSetup.Type::"Charge (Item)" THEN;
+                            IF ABSRecognitionSetup.Type = ABSRecognitionSetup.Type::"Charge (Item)" THEN
+                                IF SalesLine.Quantity <> 0 THEN BEGIN
+                                    ItemChargeAssgntSales.RESET;
+                                    ItemChargeAssgntSales.SETRANGE("Document Type", SalesLine."Document Type");
+                                    ItemChargeAssgntSales.SETRANGE("Document No.", SalesLine."Document No.");
+                                    ItemChargeAssgntSales.SETRANGE("Document Line No.", SalesLine."Line No.");
+                                    ItemChargeAssgntSales.SETRANGE("Item Charge No.", SalesLine."No.");
+
+                                    IF NOT ItemChargeAssgntSales.FINDLAST THEN BEGIN
+                                        FromSalesLine.RESET;
+                                        FromSalesLine.SETRANGE("Document Type", SalesLine."Document Type");
+                                        FromSalesLine.SETRANGE("Document No.", SalesLine."Document No.");
+                                        FromSalesLine.SETRANGE(Type, FromSalesLine.Type::Item);
+
+                                        IF FromSalesLine.FIND('-') THEN
+                                            REPEAT
+                                                NextLineNo := NextLineNo + 10000;
+                                                ItemChargeAssgntSales2.INIT;
+                                                ItemChargeAssgntSales2."Document Type" := SalesLine."Document Type";
+                                                ItemChargeAssgntSales2."Document No." := SalesLine."Document No.";
+                                                ItemChargeAssgntSales2."Document Line No." := SalesLine."Line No.";
+                                                ItemChargeAssgntSales2."Line No." := NextLineNo;
+                                                ItemChargeAssgntSales2."Applies-to Doc. Type" := SalesLine."Document Type";
+                                                ItemChargeAssgntSales2."Applies-to Doc. No." := SalesLine."Document No.";
+                                                ItemChargeAssgntSales2."Applies-to Doc. Line No." := NextLineNo;
+                                                ItemChargeAssgntSales2."Item No." := FromSalesLine."No.";
+                                                ItemChargeAssgntSales2.Description := FromSalesLine.Description;
+                                                ItemChargeAssgntSales2.VALIDATE("Unit Cost", ROUND(SalesLine."Line Amount", 0.0001));
+                                                ItemChargeAssgntSales2."Item Charge No." := SalesLine."No.";
+                                                ItemChargeAssgntSales2.INSERT;
+                                                SuggestAmount.SuggestAssignment2(SalesLine, SalesLine.Quantity, 2);
+                                                FromSalesLine.CALCFIELDS("Qty. to Assign", "Qty. Assigned");
+                                                SalesLine.CALCFIELDS("Qty. to Assign", "Qty. Assigned");
+
+                                            UNTIL FromSalesLine.NEXT = 0;
+                                    END;
+                                end;
                         end;
                     end;
             end;

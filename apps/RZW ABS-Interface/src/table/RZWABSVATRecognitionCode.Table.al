@@ -1,5 +1,5 @@
 
-namespace RZW;
+namespace dgs.rzw.abs;
 
 table 50102 "RZW ABS VAT Recognition Code"
 {

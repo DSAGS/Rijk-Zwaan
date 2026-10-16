@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 
 using Microsoft.Foundation.NoSeries;
 table 50110 "RZW EDI Message Line Detail"

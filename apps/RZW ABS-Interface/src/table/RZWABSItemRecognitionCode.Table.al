@@ -1,4 +1,4 @@
-namespace RZW;
+namespace dgs.rzw.abs;
 table 50101 "RZW ABS Item Recognition Code"
 {
     DataClassification = CustomerContent;
