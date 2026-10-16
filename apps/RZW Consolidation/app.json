@@ -1,0 +1,35 @@
+{
+  "id": "f7780e13-bf68-4b92-b42c-cf5001b98783",
+  "name": "Rijk Zwaan Consolidation",
+  "publisher": "DSA Global Solutions",
+  "version": "27.0.0.0",
+  "brief": "Consolidation Interface for RIjk Zwaan",
+  "description": "Consolidation Interface for RIjk Zwaan",
+  "privacyStatement": "https://www.dsa-gs.com/privacy-policy",
+  "EULA": "https://www.dsa-gs.com/eula",
+  "help": "https://www.dsa-gs.com/help",
+  "url": "https://www.dsa-gs.com",
+  "logo": "./logo/ExtensionLogo.png",
+  "contextSensitiveHelpUrl": "https://www.dsa-gs.com/help",
+  "applicationInsightsConnectionString": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "27.0.0.0",
+  "idRanges": [
+    {
+      "from": 50150,
+      "to": 50199
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "16.0",
+  "features": [
+      "NoImplicitWith",
+      "TranslationFile"
+  ]
+}

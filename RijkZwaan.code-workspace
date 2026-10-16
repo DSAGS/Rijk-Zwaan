@@ -10,6 +10,9 @@
             "path": "Apps/RZW ABS-Interface"
         },
         {
+            "path": "apps/RZW Consolidation"
+        },		
+        {
             "name": ".github",
             "path": ".github"
         },
@@ -17,6 +20,7 @@
             "name": ".AL-Go",
             "path": ".AL-Go"
         }
+
     ],
     "launch": {
         "configurations": [
