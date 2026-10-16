@@ -9,28 +9,32 @@ report 50150 "RZW Consol. Reporting Export"
 {
     ApplicationArea = All;
     Caption = 'Rijk Zwaan Consolidation Reporting Export';
+    ProcessingOnly = true;
     UsageCategory = Tasks;
-
     dataset
     {
         dataitem(GLAccount; "G/L Account")
         {
-            DataItemTableView = sorting("No.") where("Account Type" = const(Posting))
+            DataItemTableView = sorting("No.") where("Account Type" = const(Posting));
             trigger OnPreDataItem()
             begin
-                // Custom logic before retrieving each GL Account record can be added here.
+                this.Window.Open(
+                    this.Dialog1WindowLbl +
+                    this.Dialog2WindowLbl);
             end;
 
             trigger OnAfterGetRecord()
+            var
+                AccountingPeriod: Record "Accounting Period";
             begin
-                Window.Update(1, "No.");
+                this.Window.Update(1, "No.");
 
-                case ReportIncomeStatement of
-                    ReportIncomeStatement::"Current Period":
+                case this.ReportIncomeStatement of
+                    this.ReportIncomeStatement::"Current Period":
                         case "Income/Balance" of
                             "Income/Balance"::"Income Statement":
                                 begin
-                                    AccountingPeriod.SetRange("Starting Date", ConsolidStartDate, ConsolidEndDate);
+                                    AccountingPeriod.SetRange("Starting Date", this.ConsolidStartDate, this.ConsolidEndDate);
                                     AccountingPeriod.SetRange("New Fiscal Year", true);
                                     if AccountingPeriod.Find('-') then
                                         repeat
@@ -38,31 +42,31 @@ report 50150 "RZW Consol. Reporting Export"
                                                 ClosingDate(AccountingPeriod."Starting Date" - 1));
                                         until AccountingPeriod.Next() = 0
                                     else
-                                        SetRange("Date Filter", ConsolidStartDate, ConsolidEndDate);
+                                        SetRange("Date Filter", this.ConsolidStartDate, this.ConsolidEndDate);
                                 end;
                             "Income/Balance"::"Balance Sheet":
-                                SetRange("Date Filter", 0D, ConsolidEndDate);
+                                SetRange("Date Filter", 0D, this.ConsolidEndDate);
                         end;
-                    ReportIncomeStatement::All:
-                        SetRange("Date Filter", 0D, ConsolidEndDate);
+                    this.ReportIncomeStatement::All:
+                        SetRange("Date Filter", 0D, this.ConsolidEndDate);
                 end;
 
                 CalcFields("Net Change");
 
                 if "Net Change" <> 0 then begin
                     TestField("RZW Consol. Reporting Account");
-                    ConsolReportingAccount.Get("RZW Consol. Reporting Account");
+                    this.ConsolReportingAccount.Get("RZW Consol. Reporting Account");
 
                     if not this.TestConsolReportingCode("RZW Consol. Reporting Account") then
                         Error(
-                          Text014,
+                          this.Text014,
                           FieldCaption("RZW Consol. Reporting Account"),
                           "RZW Consol. Reporting Account",
                           TableCaption,
                           "No.");
 
-                    TempConsolBuffer."Consolidation Code" := "RZW Consol. Reporting Account";
-                    this.FillConsolidationBuffer(TempConsolBuffer, "Net Change");
+                    this.TempConsolBuffer."Consolidation Code" := "RZW Consol. Reporting Account";
+                    this.FillConsolidationBuffer(this.TempConsolBuffer, "Net Change");
                 end;
             end;
 
@@ -70,7 +74,7 @@ report 50150 "RZW Consol. Reporting Export"
 
             trigger OnPostDataItem()
             begin
-                // Custom logic after processing each GL Account data item can be added here.
+                this.Window.Close();
             end;
         }
         dataitem(ConsolBuffer; "RZW Consol. Reporting Buffer")
@@ -106,12 +110,12 @@ report 50150 "RZW Consol. Reporting Export"
                 //             ConsReportingBuffer2.FIELDCAPTION("Debit/Credit"), ConsReportingBuffer2.TABLECAPTION);
                 // END;
 
-                TempBLOB.CreateOutStream(OutStream, TextEncoding::UTF8);
+                this.TempBLOB.CreateOutStream(this.OutStream, TextEncoding::UTF8);
 
                 Cr := 13;
-                LineFeed[1] := Cr;
+                this.LineFeed[1] := Cr;
                 Cr := 10;
-                LineFeed[2] := Cr;
+                this.LineFeed[2] := Cr;
             end;
 
             trigger OnAfterGetRecord()
@@ -121,7 +125,7 @@ report 50150 "RZW Consol. Reporting Export"
                 ExportValue := Format(Amount, 0, '<Sign><Integer><Decimals>');
                 ExportValue := ConvertStr(ExportValue, ',', '.');
 
-                OutStream.WriteText(StrSubstNo('%1;%2%3', "Consolidation Code", ExportValue, LineFeed));
+                this.OutStream.WriteText(StrSubstNo('%1;%2%3', "Consolidation Code", ExportValue, this.LineFeed));
             end;
 
             trigger OnPostDataItem()
@@ -129,12 +133,12 @@ report 50150 "RZW Consol. Reporting Export"
                 FileManagement: Codeunit "File Management";
                 FileNameLbl: Label 'Consoli%1 %2.txt', Locked = true;
             begin
-                FileManagement.BLOBExport(TempBLOB, StrSubstNo(FileNameLbl, ConsolidStartDate, ConsolidEndDate), true);
+                FileManagement.BLOBExport(this.TempBLOB, StrSubstNo(FileNameLbl, this.ConsolidStartDate, this.ConsolidEndDate), true);
 
-                ConsolReportingPeriod.SetRange("Starting Date", 0D, ConsolidEndDate);
-                ConsolReportingPeriod.FindLast();
-                ConsolReportingPeriod."Reported to Consol. Company" := Ttrue;
-                ConsolReportingPeriod.Modify(false);
+                this.ConsolReportingPeriod.SetRange("Starting Date", 0D, this.ConsolidEndDate);
+                this.ConsolReportingPeriod.FindLast();
+                this.ConsolReportingPeriod."Reported" := true;
+                this.ConsolReportingPeriod.Modify(false);
             end;
         }
     }
@@ -237,10 +241,6 @@ report 50150 "RZW Consol. Reporting Export"
         this.ReportingPeriod := Format(this.ConsolidEndDate, 0, '<year,2>') + Format(this.ConsolidEndDate, 0, '<month,2>');
 
         this.TempConsolBuffer.DeleteAll();
-
-        Window.Open(
-          Dialog1WindowLbl +
-          Dialog2WindowLbl);
     end;
 
     var
@@ -249,7 +249,6 @@ report 50150 "RZW Consol. Reporting Export"
         TempConsolReportingBuffer2: Record "RZW Consol. Reporting Buffer";
         ConsolReportingPeriod: Record "RZW Consol. Reporting Period";
         ConsolReportingAccount: Record "RZW Consol. Reporting Account";
-        AccountingPeriod: Record "Accounting Period";
         TempBLOB: Codeunit "Temp Blob";
         LineFeed: Text;
 
@@ -262,7 +261,6 @@ report 50150 "RZW Consol. Reporting Export"
         DebAmount: Decimal;
         CreAmount: Decimal;
         ReportIncomeStatement: Option "Current Period",All;
-
         PeriodTableIsMissingErr: Label 'The table %1 is empty. Reporting cannot be executed.', Locked = true;
         Dialog1WindowLbl: Label ' Processing the chart of accounts...\\', Locked = true;
         Dialog2WindowLbl: Label ' No.             #1##########', Locked = true;
@@ -287,18 +285,18 @@ report 50150 "RZW Consol. Reporting Export"
             ConsolBuffer2.Modify();
         end else begin
             ConsolBuffer2.Amount := Amount;
-            ConsolBuffer2."Debet/Credit" := ConsolReportingAccount."Debet/Credit";
+            ConsolBuffer2."Debet/Credit" := this.ConsolReportingAccount."Debet/Credit";
             ConsolBuffer2.Insert();
         end;
     end;
 
     local procedure TestConsolReportingCode(CORACode: Code[20]): Boolean
     begin
-        if ConsolReportingAccount."Debet/Credit" = 0 then
+        if this.ConsolReportingAccount."Debet/Credit" = 0 then
             Error(
-              Text004,
-                ConsolReportingAccount.FieldCaption("Debet/Credit"), ConsolReportingAccount.TableCaption,
-                ConsolReportingAccount.Code);
+              this.Text004,
+                this.ConsolReportingAccount.FieldCaption("Debet/Credit"), this.ConsolReportingAccount.TableCaption,
+                this.ConsolReportingAccount.Code);
         exit(true);
     end;
 
@@ -307,11 +305,11 @@ report 50150 "RZW Consol. Reporting Export"
         AccountingPeriod2: Record "Accounting Period";
         ConsolReportingPeriod2: Record "RZW Consol. Reporting Period";
     begin
-        AccountingPeriod2.SetFilter("Starting Date", '<=%1', ConsolidEndDate);
+        AccountingPeriod2.SetFilter("Starting Date", '<=%1', this.ConsolidEndDate);
         AccountingPeriod2.SetRange("New Fiscal Year", true);
         AccountingPeriod2.FindLast();
 
-        ConsolReportingPeriod2.SetFilter("Starting Date", '<=%1', ConsolidEndDate);
+        ConsolReportingPeriod2.SetFilter("Starting Date", '<=%1', this.ConsolidEndDate);
         ConsolReportingPeriod2.SetRange("New Fiscal Year Consol. Comp.", true);
         ConsolReportingPeriod2.FindLast();
 
