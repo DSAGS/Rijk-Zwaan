@@ -827,20 +827,21 @@ codeunit 50111 "RZW Inb. EDI Msg.-Process"
 
                         ReleaseSalesDocument.Run(GlobalSalesHeader);
                         GlobalSalesHeader.CalcFields("Amount Including VAT");
-                        if Round(GlobalSalesHeader."Amount Including VAT", 0.01) <> Round(TotalAmtInclVAT, 0.01) then begin
-                            GlobalSalesLine.Init();
-                            GlobalSalesLine."Document Type" := GlobalSalesHeader."Document Type";
-                            GlobalSalesLine."Document No." := GlobalSalesHeader."No.";
-                            GlobalSalesLine."Line No." := GetNextLineNo();
-                            GlobalSalesLine.Insert();
+                        if EDISetup."VAT calculation" = EDISetup."VAT calculation"::"Imported Amounts Leading" then
+                            if Round(GlobalSalesHeader."Amount Including VAT", 0.01) <> Round(TotalAmtInclVAT, 0.01) then begin
+                                GlobalSalesLine.Init();
+                                GlobalSalesLine."Document Type" := GlobalSalesHeader."Document Type";
+                                GlobalSalesLine."Document No." := GlobalSalesHeader."No.";
+                                GlobalSalesLine."Line No." := GetNextLineNo();
+                                GlobalSalesLine.Insert();
 
-                            GlobalSalesLine.Validate(Type, GlobalSalesLine.Type::"G/L Account");
-                            GlobalSalesLine.Validate("No.", EDISetup."VAT Correction Account G/L");
-                            GlobalSalesLine.Description := VatCorrectionLbl;
-                            GlobalSalesLine.Validate(Quantity, 1);
-                            GlobalSalesLine.Validate("Unit Price", TotalAmtInclVAT - GlobalSalesHeader."Amount Including VAT");
-                            GlobalSalesLine.Modify();
-                        end;
+                                GlobalSalesLine.Validate(Type, GlobalSalesLine.Type::"G/L Account");
+                                GlobalSalesLine.Validate("No.", EDISetup."VAT Correction Account G/L");
+                                GlobalSalesLine.Description := VatCorrectionLbl;
+                                GlobalSalesLine.Validate(Quantity, 1);
+                                GlobalSalesLine.Validate("Unit Price", TotalAmtInclVAT - GlobalSalesHeader."Amount Including VAT");
+                                GlobalSalesLine.Modify();
+                            end;
                     end;
                 else
                     OnProcessAdditionalSalesDocFooterFields(EDIMessageLineDetail2, GlobalSalesHeader, GlobalSalesLine);
@@ -880,7 +881,7 @@ codeunit 50111 "RZW Inb. EDI Msg.-Process"
         NewCurrentFieldNo := CurrentFieldNo;
     end;
 
-    local procedure GetNextLineNo(): Integer
+    internal procedure GetNextLineNo(): Integer
     var
         SalesLine2: Record "Sales Line";
     begin

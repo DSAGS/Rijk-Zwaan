@@ -2,13 +2,13 @@ namespace RZW;
 
 using Microsoft.Sales.Document;
 
-tableextension 50100 "RZW BR " extends "Sales Header"
+tableextension 50100 "RZW BR Sales Header" extends "Sales Header"
 {
     fields
     {
-        field(50103; "RZW BR ABS Order Reference"; code[20])
+        field(50100; "RZW BR ABS Order Reference"; code[20])
         {
-            Caption = 'RZW BR ABS';
+            Caption = 'ABS Order Reference';
             DataClassification = CustomerContent;
             AllowInCustomizations = AsReadWrite;
         }

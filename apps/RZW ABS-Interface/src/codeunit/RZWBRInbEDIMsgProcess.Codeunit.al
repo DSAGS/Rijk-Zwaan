@@ -394,15 +394,19 @@ codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
     var
         EDISetup: Record "RZW EDI Setup";
         EDIMessageLineDetail2: Record "RZW EDI Message Line Detail";
+        ABSItemRecognitionCode: Record "RZW ABS Item Recognition Code";
         ABSRecognitionSetup: Record "RZW ABS Recognition Setup";
         SalesHeader: Record "Sales Header";
         SalesLine: Record "Sales Line";
         TempSalesLine: Record "Sales Line" temporary;
+        ItemChargeAssgntSales: Record "Item Charge Assignment (Sales)";
+        ItemChargeAssgntSales2: Record "Item Charge Assignment (Sales)";
+        SuggestAmount: Codeunit "Item Charge Assgnt. (Sales)";
         TmpItemRecognitionCode: Code[10];
         TmpVATRecognitionCode: Code[10];
-        CountryOfOriginCode: Code[10];
         TempDescription: array[2] of Text;
         Sign: Integer;
+        IsItemLine: Boolean;
     begin
 #pragma warning disable AA0139
         EDISetup.Get();
@@ -451,26 +455,24 @@ codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
                 11:
                     TempDescription[1] := EDIMessageLineDetail2.Content;
                 12:
-                    CountryOfOriginCode := EDIMessageLineDetail2.Content;
+                    TempSalesLine."RZW BR Ctry/Reg.of Origin Code" := EDIMessageLineDetail2.Content;
                 13:
                     ;
                 14:
-                    ;
-#pragma warning disable AL0132 // TODO: - add fields in Sales Line Extension
-                // TempSalesLine."Lot No." := EDIMessageLineDetail2.Content;
-#pragma warning restore AL0132 // TODO: - add fields in Sales Line Extension
-                // TempDescription[2] := Content;
+                    TempSalesLine."RZW BR Batch No." := EDIMessageLineDetail2.Content;
                 15:
                     begin
-                        TempSalesLine."No." := EDIMessageLineDetail2.Content;
+                        TempSalesLine."RZW BR ABS Item No." := EDIMessageLineDetail2.Content;
                         if TempDescription[1] <> '' then
                             TempSalesLine.Description := CopyStr(TempDescription[1], 1, MaxStrLen(TempSalesLine.Description));
                         if TempDescription[2] <> '' then
                             TempSalesLine."Description 2" := CopyStr(TempDescription[2], 1, MaxStrLen(TempSalesLine."Description 2"));
+                        ABSItemRecognitionCode.Get(TmpItemRecognitionCode);
+                        if ABSItemRecognitionCode."RZW BR ProcessAsFreightCharge" then
+                            TempSalesLine."RZW BR ABS Item No." := '';
 
                         ABSRecognitionSetup.Get(TmpItemRecognitionCode, TmpVATRecognitionCode);
-                        // TODO:
-                        // UpdateItem(TempSalesLine, ABSRecognitionSetup, CountryOfOriginCode);
+                        IsItemLine := UpdateItem(TempSalesLine, ABSRecognitionSetup, TempSalesLine."RZW BR Ctry/Reg.of Origin Code");
 
                         if ABSRecognitionSetup."Payment Discount" then
                             SalesHeader.TestField("Payment Discount %")
@@ -478,20 +480,15 @@ codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
                             Clear(SalesLine);
                             SalesLine."Document Type" := SalesHeader."Document Type";
                             SalesLine."Document No." := SalesHeader."No.";
-                            // TODO:
-
-                            // SalesLine."Line No." := GetNextLineNo();
+                            SalesLine."Line No." := InbEDIMsgProcess.GetNextLineNo();
                             SalesLine.Insert();
 
-                            if TempSalesLine."No." = '' then begin
+                            if IsItemLine then begin
+                                SalesLine.Validate(Type, SalesLine.Type::Item);
+                                SalesLine.Validate("No.", TempSalesLine."RZW BR ABS Item No.");
+                            end else begin
                                 SalesLine.Validate(Type, ABSRecognitionSetup.Type);
                                 SalesLine.Validate("No.", ABSRecognitionSetup."No.");
-                            end else begin
-                                SalesLine.Validate(Type, SalesLine.Type::Item);
-                                SalesLine.Validate("No.", TempSalesLine."No.");
-                                // TODO:
-                                // if ABSRecognitionSetup.Type = ABSRecognitionSetup.Type::"G/L Account" then
-                                //     SalesLine."ABS Sales Account" := ABSRecognitionSetup."No.";
                             end;
 
                             if SalesLine.Type = SalesLine.Type::Item then begin
@@ -515,20 +512,79 @@ codeunit 50105 "RZW BR Inb. EDI Msg.-Process"
                             SalesLine.Validate("Gen. Prod. Posting Group", ABSRecognitionSetup."Gen. Prod. Posting Group");
                             SalesLine.Validate("VAT Prod. Posting Group", ABSRecognitionSetup."VAT Prod. Posting Group");
 
-#pragma warning disable AL0132 // TODO: - add fields in Sales Line Extension
-                            // SalesLine."Lot No." := "Lot No.";
-                            // SalesLine."ABS Delivery No." := "ABS Delivery No.";
-                            // SalesLine."ABS Shipment Date" := "ABS Shipment Date";
-                            // SalesLine.Modify();
-                            // // If Line Amount is zero for an Item Line, then create an additonal text line
+                            SalesLine.Modify();
+                            //  If Line Amount is zero for an Item Line, then create an additonal text line
                             // if (SalesLine.Type = SalesLine.Type::Item) and (SalesLine."No." <> '') and (TempSalesLine.Amount = 0) then
                             //     CreateAdditonalLine(SalesLine."Line No.", EmptyTextLine);
-#pragma warning restore AL0132 // TODO: - add fields in Sales Line Extension
+
+                            //     IF ABSRecognitionSetup.Type = ABSRecognitionSetup.Type::"Charge (Item)" THEN;
                         end;
                     end;
             end;
         until EDIMessageLineDetail2.Next() = 0;
 #pragma warning restore AA0139
+    end;
+
+    local procedure UpdateItem(var
+                                   TempSalesLine: Record "Sales Line";
+                                   ABSRecognitionSetup: Record "RZW ABS Recognition Setup";
+                                   CountryOfOriginCode: Code[10]): Boolean
+    var
+        Item: Record Item;
+        UOM: Record "Unit of Measure";
+        ItemUOM: Record "Item Unit of Measure";
+        NewItem: Boolean;
+    begin
+        if TempSalesLine."RZW BR ABS Item No." = '' then
+            exit(false);
+
+        if not UOM.Get(TempSalesLine."Unit of Measure Code") then begin
+            UOM.Init();
+            UOM.Code := TempSalesLine."Unit of Measure Code";
+            UOM.Description := UOM.Code;
+            UOM.Insert();
+        end;
+
+        if not ItemUOM.Get(TempSalesLine."No.", UOM.Code) then begin
+            ItemUOM.Init();
+            ItemUOM."Item No." := TempSalesLine."No.";
+            ItemUOM.Code := UOM.Code;
+            ItemUOM."Qty. per Unit of Measure" := 1;
+            ItemUOM.Insert();
+        end;
+
+        if not Item.Get(TempSalesLine."No.") then begin
+            Item.Init();
+            NewItem := true;
+            Item."No." := TempSalesLine."No.";
+            Item."Base Unit of Measure" := UOM.Code;
+            Item."Sales Unit of Measure" := Item."Base Unit of Measure";
+            Item."Purch. Unit of Measure" := Item."Base Unit of Measure";
+            Item.Type := Item.Type::Service;
+            Item.Insert();
+            exit(true);
+        end;
+
+        // When item fields are validated, a check is executed which prevents any modifications when entries are present...
+        Item.Description := CopyStr(TempSalesLine.Description, 1, MaxStrLen(Item.Description));
+        if NewItem then
+            Item.Validate(Description);
+
+        Item."Description 2" := CopyStr(TempSalesLine.Description, MaxStrLen(Item.Description) + 1, MaxStrLen(Item."Description 2"));
+
+        if Item."Gen. Prod. Posting Group" = '' then
+            Item."Gen. Prod. Posting Group" := ABSRecognitionSetup."Gen. Prod. Posting Group";
+        if Item."VAT Prod. Posting Group" = '' then
+            Item."VAT Prod. Posting Group" := ABSRecognitionSetup."VAT Prod. Posting Group";
+        // RZWPT
+        if NewItem then begin
+            Item."Costing Method" := ABSRecognitionSetup."Def. Costing Method";
+            Item."Inventory Posting Group" := ABSRecognitionSetup."Def. Inventory Posting Group";
+        end;
+        if CountryOfOriginCode <> '' then
+            Item."Country/Region of Origin Code" := CountryOfOriginCode;
+        // RZWPT {*}
+        Item.Modify();
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"RZW Inb. EDI Msg.-Process", OnProcessAdditionalCustomerLineTypes, '', false, false)]

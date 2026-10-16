@@ -73,21 +73,26 @@ table 50103 "RZW ABS Recognition Setup"
         field(50; "Item Category Code"; Code[10])
         {
             Caption = 'Item Category Code';
-            Description = 'RZWHU';
             TableRelation = "Item Category";
         }
-        field(51; "Def. Costing Method"; Option)
+        field(51; "Def. Costing Method"; Enum "Costing Method")
         {
             Caption = 'Def. Costing Method';
-            Description = 'RZWPT';
-            OptionCaption = 'FIFO,LIFO,Specific,Average,Standard';
-            OptionMembers = FIFO,LIFO,Specific,"Average",Standard;
+
         }
         field(52; "Def. Inventory Posting Group"; Code[10])
         {
             Caption = 'Def. Inventory Posting Group';
-            Description = 'RZWPT';
             TableRelation = "Inventory Posting Group".Code;
+        }
+        field(50100; "RZW BR NCM Code"; Code[10])
+        {
+            Caption = 'NCM Code';
+            // TableRelation = "NCM Code"; part of brazilian tax requirements
+        }
+        field(50101; "RZW BR TaxAreaSetupSalesRegion"; Boolean)
+        {
+            Caption = 'Tax Area Setup Sales Region';
         }
     }
 

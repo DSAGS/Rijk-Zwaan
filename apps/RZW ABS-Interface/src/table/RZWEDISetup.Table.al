@@ -19,6 +19,12 @@ table 50100 "RZW EDI Setup"
         {
             Caption = 'Primary Key';
         }
+        field(5; "VAT calculation"; option)
+        {
+            Caption = 'VAT calculation';
+            OptionMembers = "Imported Amounts Leading","Dynamics BC Leading";
+            OptionCaption = 'Imported Amounts Leading, Dynamics BC Leading';
+        }
         field(36; "Def. Customer Posting Group"; Code[20])
         {
             Caption = 'Def. Customer Posting Group';
@@ -106,12 +112,13 @@ table 50100 "RZW EDI Setup"
 
     internal procedure TestImportSInv()
     begin
-        TestField("Def. Gen. Bus. Posting Group");
         TestField("Def. VAT Bus. Posting Group");
-        TestField("VAT Correction Account G/L");
+        TestField("Def. Gen. Bus. Posting Group");
         TestField("Def. Item Recognition Code");
         TestField("Def. VAT Recognition Code");
         TestField("Default Payment Terms Code");
+        if "VAT calculation" = "VAT calculation"::"Imported Amounts Leading" then
+            TestField("VAT Correction Account G/L");
     end;
 
     internal procedure TestImportPInv()

@@ -18,6 +18,10 @@ table 50101 "RZW ABS Item Recognition Code"
         {
             Caption = 'Description';
         }
+        field(50100; "RZW BR ProcessAsFreightCharge"; boolean) // part of Brazilian localization
+        {
+            Caption = 'RZW BR Process As Freight Charge';
+        }
     }
 
     keys
